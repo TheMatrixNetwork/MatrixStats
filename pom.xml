@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.matrixnetwork</groupId>
-	<artifactId>MatrixStats</artifactId>
+	<artifactId>MatrixStats-dev</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
