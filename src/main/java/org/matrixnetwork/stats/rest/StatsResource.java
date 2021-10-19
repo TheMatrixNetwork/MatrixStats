@@ -3,6 +3,8 @@ package org.matrixnetwork.stats.rest;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import org.matrixnetwork.stats.MatrixStats;
+import org.matrixnetwork.stats.entity.MatrixPlayer;
+import org.matrixnetwork.stats.manager.DataManager;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,12 +22,14 @@ public class StatsResource {
     public Response meet(@PathParam("username") String username) {
         if(MatrixStats.getPlugin().getServer().getPlayer(username) != null) {
             Player p = MatrixStats.getPlugin().getServer().getPlayer(username);
+            MatrixPlayer mP = DataManager.getInstance().getSession().find(MatrixPlayer.class, p.getUniqueId());
             JSONObject obj = new JSONObject();
             obj.put("exp", p.getExp());
             obj.put("food_level", p.getFoodLevel());
             obj.put("loc_x", p.getLocation().getBlockX());
             obj.put("loc_y", p.getLocation().getBlockY());
             obj.put("loc_z", p.getLocation().getBlockZ());
+            obj.put("currency_transactions", mP.getTransactions());
             return Response.ok(obj.toJSONString()).build();
         }
         else {

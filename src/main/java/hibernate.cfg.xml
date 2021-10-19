@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 5.3//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-5.3.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="hbm2ddl.auto">update</property>
+        <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/matrixstats</property>
+        <property name="connection.username">app</property>
+        <property name="connection.password">app</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+
+        <mapping class="org.matrixnetwork.stats.entity.CurrencyData"/>
+        <mapping class="org.matrixnetwork.stats.entity.MatrixPlayer"/>
+    </session-factory>
+</hibernate-configuration>
