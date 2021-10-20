@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.matrixnetwork.stats.handler.CurrencyHandler;
+import org.matrixnetwork.stats.rest.AuthResource;
 import org.matrixnetwork.stats.rest.StatsResource;
 
 import javax.swing.*;
@@ -52,6 +53,7 @@ public class MatrixStats extends JavaPlugin{
 		ResourceConfig rc = new ResourceConfig();
 		rc.packages("org.matrixnetwork.stats.rest");
 		rc.register(StatsResource.class);
+		rc.register(AuthResource.class);
 		server = JdkHttpServerFactory.createHttpServer(
 				URI.create( "http://localhost:8080/api" ), rc );
 
