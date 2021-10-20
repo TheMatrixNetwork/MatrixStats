@@ -1,11 +1,15 @@
 package org.matrixnetwork.stats.entity;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class CurrencyData {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private
     Long id;
 
@@ -13,7 +17,7 @@ public class CurrencyData {
 
     private LocalDateTime time;
 
-    @ManyToOne(targetEntity = MatrixPlayer.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = MatrixPlayer.class)
     private MatrixPlayer matrixPlayer;
 
     //region Constructors
@@ -54,11 +58,10 @@ public class CurrencyData {
 
     @Override
     public String toString() {
-        return "CurrencyTransaction{" +
-                "id=" + id +
-                ", amount=" + amount +
-                ", time=" + time +
-                '}';
+        JSONObject obj = new JSONObject();
+        obj.put("amount", amount);
+        obj.put("time", time.toString());
+        return obj.toJSONString();
     }
 
     public MatrixPlayer getMatrixPlayer() {

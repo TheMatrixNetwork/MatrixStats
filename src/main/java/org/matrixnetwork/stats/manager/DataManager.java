@@ -13,7 +13,10 @@ import org.hibernate.service.ServiceRegistry;
 import org.matrixnetwork.stats.entity.CurrencyData;
 import org.matrixnetwork.stats.entity.MatrixPlayer;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Properties;
+import java.util.UUID;
 
 public class DataManager {
     private static DataManager instance;
@@ -60,5 +63,24 @@ public class DataManager {
 
     public Session getSession() {
         return sessionFactory.openSession();
+    }
+
+    public MatrixPlayer getMatrixPlayer(String uniqueId) {
+        try(Session session = DataManager.getInstance().getSession()) {
+            CriteriaQuery<MatrixPlayer> criteria = DataManager.getInstance().getSession()
+                    .getCriteriaBuilder()
+                    .createQuery(MatrixPlayer.class);
+
+            Root<MatrixPlayer> root = criteria.from(MatrixPlayer.class);
+
+            MatrixPlayer player = session.createQuery(criteria.select(root)
+                    .where(
+                            session.getCriteriaBuilder()
+                                    .equal(root.get("uuid"), uniqueId)
+                    )).uniqueResult();
+
+            return player;
+        }
+
     }
 }

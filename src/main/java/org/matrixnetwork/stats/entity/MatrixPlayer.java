@@ -1,27 +1,28 @@
 package org.matrixnetwork.stats.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 public class MatrixPlayer {
     @Id
-    UUID uuid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private
+    Long id;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    String uuid;
+
+    @OneToMany(mappedBy = "matrixPlayer", fetch = FetchType.EAGER)
     private List<CurrencyData> transactions;
 
     //region Constructors
-    public MatrixPlayer(UUID uuid, List<CurrencyData> transactions) {
+    public MatrixPlayer(String uuid, List<CurrencyData> transactions) {
         this.uuid = uuid;
         this.transactions = transactions;
     }
 
-    public MatrixPlayer(UUID uuid) {
+    public MatrixPlayer(String uuid) {
         this.uuid = uuid;
     }
 
@@ -31,11 +32,11 @@ public class MatrixPlayer {
     //endregion
 
     //region Getters and Setters
-    public UUID getUUID() {
+    public String getUUID() {
         return uuid;
     }
 
-    public void setUUID(UUID id) {
+    public void setUUID(String id) {
         this.uuid = id;
     }
 
@@ -45,6 +46,14 @@ public class MatrixPlayer {
 
     public void setTransactions(List<CurrencyData> transactions) {
         this.transactions = transactions;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     //endregion
 }

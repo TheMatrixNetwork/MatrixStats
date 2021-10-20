@@ -3,13 +3,17 @@ package org.matrixnetwork.stats.handler;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.matrixnetwork.stats.MatrixStats;
 import org.matrixnetwork.stats.entity.CurrencyData;
 import org.matrixnetwork.stats.entity.MatrixPlayer;
 import org.matrixnetwork.stats.manager.DataManager;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 
 public class CurrencyHandler {
@@ -37,9 +41,18 @@ public class CurrencyHandler {
                     Transaction t = session.beginTransaction();
 
                     for(Player p : MatrixStats.getPlugin().getServer().getOnlinePlayers()) {
-                        MatrixPlayer player = session.find(MatrixPlayer.class, p.getUniqueId());
+                        MatrixPlayer player = DataManager.getInstance().getMatrixPlayer(p.getUniqueId().toString());
+
+                        if(player == null) {
+                            Session s = DataManager.getInstance().getSession();
+                            Transaction tra = s.beginTransaction();
+
+                            player = (MatrixPlayer) s.merge(new MatrixPlayer(p.getUniqueId().toString()));
+                            tra.commit();
+                        }
+
                         double balance = MatrixStats.getEcon().getBalance(p);
-                        if(player.getTransactions().get(player.getTransactions().size()-1).getAmount() != balance) {
+                        if(player.getTransactions() == null|| player.getTransactions().size() == 0 || player.getTransactions().get(player.getTransactions().size()-1).getAmount() != balance) {
                             CurrencyData data = new CurrencyData(balance, LocalDateTime.now(), player);
                             session.merge(data);
                         }
@@ -49,6 +62,6 @@ public class CurrencyHandler {
 
                 }
             }
-        }.runTaskTimer(MatrixStats.getPlugin(), 20*60*60, 20*60*60);
+        }.runTaskTimer(MatrixStats.getPlugin(), 20*60, 20*60);
     }
 }
