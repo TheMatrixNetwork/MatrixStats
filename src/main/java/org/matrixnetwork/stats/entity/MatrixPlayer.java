@@ -13,17 +13,20 @@ public class MatrixPlayer {
 
     String uuid;
 
+    private String username;
+
     @OneToMany(mappedBy = "matrixPlayer", fetch = FetchType.EAGER)
     private List<CurrencyData> transactions;
 
     //region Constructors
-    public MatrixPlayer(String uuid, List<CurrencyData> transactions) {
+    public MatrixPlayer(String uuid, List<CurrencyData> transactions, String username) {
         this.uuid = uuid;
         this.transactions = transactions;
+        this.username = username;
     }
 
-    public MatrixPlayer(String uuid) {
-        this.uuid = uuid;
+    public MatrixPlayer(String uuid, String username) {
+        this(uuid, null, username);
     }
 
     public MatrixPlayer() {
@@ -54,6 +57,14 @@ public class MatrixPlayer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
     //endregion
 }
