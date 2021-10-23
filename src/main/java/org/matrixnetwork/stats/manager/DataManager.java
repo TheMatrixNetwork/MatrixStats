@@ -65,7 +65,7 @@ public class DataManager {
         return sessionFactory.openSession();
     }
 
-    public MatrixPlayer getMatrixPlayer(String uniqueId) {
+    public MatrixPlayer getMatrixPlayerByProperty(String propertyName, Object propertyValue) {
         try(Session session = DataManager.getInstance().getSession()) {
             CriteriaQuery<MatrixPlayer> criteria = DataManager.getInstance().getSession()
                     .getCriteriaBuilder()
@@ -76,11 +76,10 @@ public class DataManager {
             MatrixPlayer player = session.createQuery(criteria.select(root)
                     .where(
                             session.getCriteriaBuilder()
-                                    .equal(root.get("uuid"), uniqueId)
+                                    .equal(root.get(propertyName), propertyValue)
                     )).uniqueResult();
 
             return player;
         }
-
     }
 }

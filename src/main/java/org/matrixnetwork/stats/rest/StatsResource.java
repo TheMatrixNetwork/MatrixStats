@@ -31,13 +31,13 @@ public class StatsResource {
     public Response meet(@PathParam("username") String username) {
         if(MatrixStats.getPlugin().getServer().getPlayer(username) != null) {
             Player p = MatrixStats.getPlugin().getServer().getPlayer(username);
-            MatrixPlayer mP = DataManager.getInstance().getMatrixPlayer(p.getUniqueId().toString());
+            MatrixPlayer mP = DataManager.getInstance().getMatrixPlayerByProperty("uuid", p.getUniqueId().toString());
 
             if(mP == null) {
                 Session s = DataManager.getInstance().getSession();
                 Transaction t = s.beginTransaction();
 
-                mP = (MatrixPlayer) s.merge(new MatrixPlayer(p.getUniqueId().toString()));
+                mP = (MatrixPlayer) s.merge(new MatrixPlayer(p.getUniqueId().toString(), p.getName()));
                 t.commit();
             }
 

@@ -59,8 +59,8 @@ public class CurrencyData {
     @Override
     public String toString() {
         JSONObject obj = new JSONObject();
-        obj.put("amount", amount);
-        obj.put("time", time.toString());
+        obj.put("value", amount);
+        obj.put("name", time.toString());
         return obj.toJSONString();
     }
 

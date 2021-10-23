@@ -41,13 +41,13 @@ public class CurrencyHandler {
                     Transaction t = session.beginTransaction();
 
                     for(Player p : MatrixStats.getPlugin().getServer().getOnlinePlayers()) {
-                        MatrixPlayer player = DataManager.getInstance().getMatrixPlayer(p.getUniqueId().toString());
+                        MatrixPlayer player = DataManager.getInstance().getMatrixPlayerByProperty("uuid", p.getUniqueId().toString());
 
                         if(player == null) {
                             Session s = DataManager.getInstance().getSession();
                             Transaction tra = s.beginTransaction();
 
-                            player = (MatrixPlayer) s.merge(new MatrixPlayer(p.getUniqueId().toString()));
+                            player = (MatrixPlayer) s.merge(new MatrixPlayer(p.getUniqueId().toString(), p.getName()));
                             tra.commit();
                         }
 
