@@ -18,7 +18,6 @@ import org.matrixnetwork.stats.handler.CurrencyHandler;
 import org.matrixnetwork.stats.rest.AuthResource;
 import org.matrixnetwork.stats.rest.StatsResource;
 
-import javax.swing.*;
 import java.net.URI;
 
 @Plugin(name = "MatrixStats", version = "1.0.0")

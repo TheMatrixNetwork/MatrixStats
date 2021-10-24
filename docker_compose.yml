@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+  angular-ui:
+    build:
+      context: ./app-ui
+      dockerfile: Dockerfile-dev
+    ports:
+      - "4201:4201"
+    container_name: angular-ui
+    volumes:
+      - ./src/main/ui:/usr/src/app/app-ui
+      - /usr/src/app/app-ui/node_modules
+  server:
+    image: matrixnetwork/devserver
+    restart: always
+    ports:
+      - 25565:25565
+      - 25575:25575
+      - 8080:8080
