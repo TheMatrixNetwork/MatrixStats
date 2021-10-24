@@ -17,6 +17,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.matrixnetwork.stats.handler.CurrencyHandler;
 import org.matrixnetwork.stats.rest.AuthResource;
 import org.matrixnetwork.stats.rest.StatsResource;
+import org.matrixnetwork.stats.rest.filter.CorsFilter;
 
 import java.net.URI;
 
@@ -53,6 +54,7 @@ public class MatrixStats extends JavaPlugin{
 		rc.packages("org.matrixnetwork.stats.rest");
 		rc.register(StatsResource.class);
 		rc.register(AuthResource.class);
+		rc.register(CorsFilter.class);
 		server = JdkHttpServerFactory.createHttpServer(
 				URI.create( "http://localhost:8080/api" ), rc );
 

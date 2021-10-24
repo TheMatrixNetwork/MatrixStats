@@ -48,6 +48,7 @@ public class StatsResource {
             loc.put("x", p.getLocation().getBlockX());
             loc.put("y", p.getLocation().getBlockY());
             loc.put("z", p.getLocation().getBlockZ());
+            obj.put("username", p.getName());
             obj.put("location", loc);
             obj.put("currency_transactions", mP.getTransactions());
             return Response.ok(obj.toJSONString()).build();

@@ -29,7 +29,7 @@ public class DataManager {
             // Hibernate settings equivalent to hibernate.cfg.xml's properties
             Properties settings = new Properties();
             settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-            settings.put(Environment.URL, "jdbc:mysql://localhost:3306/matrixstats?useSSL=false");
+            settings.put(Environment.URL, "jdbc:mysql://db:3306/matrixstats?useSSL=false");
             settings.put(Environment.USER, "root");
             settings.put(Environment.PASS, "root");
             settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
@@ -48,7 +48,7 @@ public class DataManager {
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
 
-            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            sessionFactory = configuration.buildSessionFactory();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -17,7 +17,7 @@ public class Auth {
     private BukkitTask tokenInvalidator;
 
     private long INVALIDATOR_CHECK_DELAY = 20*60; // in ticks
-    private long TOKEN_EXPIRATION_TIME = 10*60; // in seconds
+    public long TOKEN_EXPIRATION_TIME = 10*60; // in seconds
 
     private Auth() {
         tokenList = new HashMap<>();

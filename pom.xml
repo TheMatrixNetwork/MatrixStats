@@ -18,6 +18,11 @@
 			<url>https://repo.codemc.org/repository/maven-public/</url>
 		</repository>
 		<repository>
+			<id>java.net-Public</id>
+			<name>Maven Java Net Snapshots and Releases</name>
+			<url>https://maven.java.net/content/groups/public/</url>
+		</repository>
+		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 		</repository>
@@ -41,6 +46,23 @@
 			<artifactId>VaultAPI</artifactId>
 			<version>1.7</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.json.bind</groupId>
+			<artifactId>javax.json.bind-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>yasson</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
@@ -153,12 +175,12 @@
 				<executions>
 					<execution>
 						<id>Restart test server</id>
-						<phase>generate-sources</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>${basedir}/scripts/restart-server.bat</executable>
+							<executable>${basedir}/scripts/restart-server.sh</executable>
 						</configuration>
 					</execution>
 				</executions>

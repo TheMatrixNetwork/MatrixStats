@@ -23,6 +23,7 @@
     "@angular/router": "~12.2.0",
     "@swimlane/ngx-charts": "^19.0.1",
     "hammerjs": "^2.0.8",
+    "ng2-cookies": "^1.0.12",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

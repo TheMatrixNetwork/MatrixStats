@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 
 export interface Location {
   x: number;
@@ -14,12 +14,13 @@ export interface CurrencyStatus {
 }
 
 export interface Token {
-  token: String;
+  token: string;
+  expiryDate: string;
 }
 
 export interface Account {
-  username: String;
-  password: String;
+  username: string;
+  password: string;
 }
 
 export interface PlayerStats {
@@ -56,10 +57,10 @@ export class StatsService {
      */
   }
 
-  public getToken(account: Account) {
+  public getToken(account: Account): any {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded',
+        'Content-Type':  'application/json',
       })
     };
 

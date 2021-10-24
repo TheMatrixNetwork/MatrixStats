@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PlayerStats, StatsService} from "../stats.service";
 import {ColorHelper, ScaleType} from "@swimlane/ngx-charts";
+import {Cookie} from "ng2-cookies";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'ngx-line-chart',
@@ -43,12 +45,17 @@ export class AdminStatsComponent implements OnInit {
   xAxisLabel: string = 'Date';
   yAxisLabel: string = 'Currency';
   timeline: boolean = true;
+  token: String;
 
   colorScheme = 'cool';
 
-  constructor(statsService: StatsService) {
+  constructor(statsService: StatsService, private router: Router) {
     this.statsService = statsService;
-    this.multi = [];
+    this.token = Cookie.get("token");
+    if(this.token == '') {
+      this.router.navigate(['login']);
+    }
+      this.multi = [];
     Object.assign(this, this.multi);
     this.setData();
   }
