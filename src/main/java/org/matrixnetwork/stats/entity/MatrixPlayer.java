@@ -1,5 +1,8 @@
 package org.matrixnetwork.stats.entity;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -16,12 +19,12 @@ public class MatrixPlayer {
     private String username;
 
     @OneToMany(mappedBy = "matrixPlayer", fetch = FetchType.EAGER)
-    private List<CurrencyData> transactions;
+    private List<PlayerStats> stats;
 
     //region Constructors
-    public MatrixPlayer(String uuid, List<CurrencyData> transactions, String username) {
+    public MatrixPlayer(String uuid, List<PlayerStats> stats, String username) {
         this.uuid = uuid;
-        this.transactions = transactions;
+        this.stats = stats;
         this.username = username;
     }
 
@@ -43,14 +46,6 @@ public class MatrixPlayer {
         this.uuid = id;
     }
 
-    public List<CurrencyData> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<CurrencyData> transactions) {
-        this.transactions = transactions;
-    }
-
     public Long getId() {
         return id;
     }
@@ -66,5 +61,25 @@ public class MatrixPlayer {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public List<PlayerStats> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<PlayerStats> stats) {
+        this.stats = stats;
+    }
     //endregion
+
+    public JSONObject toJson() {
+        JSONObject player = new JSONObject();
+        JSONArray stats = new JSONArray();
+        for (PlayerStats stat : getStats()) {
+            stats.add(stat.toJSON());
+        }
+        player.put("username", username);
+        player.put("uuid", uuid);
+        player.put("stats", stats);
+        return player;
+    }
 }

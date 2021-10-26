@@ -4,17 +4,14 @@ import com.sun.net.httpserver.HttpServer;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.annotation.command.Command;
-import org.bukkit.plugin.java.annotation.command.Commands;
 import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
 import org.bukkit.plugin.java.annotation.plugin.ApiVersion.Target;
 import org.bukkit.plugin.java.annotation.plugin.Description;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.matrixnetwork.stats.handler.CurrencyHandler;
+import org.matrixnetwork.stats.handler.StatsHandler;
 import org.matrixnetwork.stats.rest.AuthResource;
 import org.matrixnetwork.stats.rest.StatsResource;
 import org.matrixnetwork.stats.rest.filter.CorsFilter;
@@ -48,7 +45,7 @@ public class MatrixStats extends JavaPlugin{
 			return;
 		}
 
-		CurrencyHandler.init();
+		StatsHandler.init();
 
 		ResourceConfig rc = new ResourceConfig();
 		rc.packages("org.matrixnetwork.stats.rest");

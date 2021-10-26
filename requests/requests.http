@@ -5,3 +5,7 @@ Content-Type: application/json
   "username": "s1mple133",
   "password": "password1"
 }
+
+###
+
+GET http://localhost:8080/api/stats/S1mple133

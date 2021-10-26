@@ -2,21 +2,16 @@ package org.matrixnetwork.stats.manager;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.matrixnetwork.stats.entity.CurrencyData;
 import org.matrixnetwork.stats.entity.MatrixPlayer;
+import org.matrixnetwork.stats.entity.PlayerStats;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Properties;
-import java.util.UUID;
 
 public class DataManager {
     private static DataManager instance;
@@ -43,7 +38,7 @@ public class DataManager {
             configuration.setProperties(settings);
 
             configuration.addAnnotatedClass(MatrixPlayer.class);
-            configuration.addAnnotatedClass(CurrencyData.class);
+            configuration.addAnnotatedClass(PlayerStats.class);
 
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

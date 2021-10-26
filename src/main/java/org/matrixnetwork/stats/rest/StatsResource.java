@@ -3,6 +3,7 @@ package org.matrixnetwork.stats.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.javadoc.internal.doclets.toolkit.taglets.UserTaglet;
 import org.bukkit.entity.Player;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -12,6 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.matrixnetwork.stats.MatrixStats;
 import org.matrixnetwork.stats.entity.MatrixPlayer;
+import org.matrixnetwork.stats.entity.PlayerStats;
 import org.matrixnetwork.stats.manager.DataManager;
 
 import javax.transaction.Transactional;
@@ -41,17 +43,7 @@ public class StatsResource {
                 t.commit();
             }
 
-            JSONObject obj = new JSONObject();
-            obj.put("exp", p.getExp());
-            obj.put("food_level", p.getFoodLevel());
-            JSONObject loc = new JSONObject();
-            loc.put("x", p.getLocation().getBlockX());
-            loc.put("y", p.getLocation().getBlockY());
-            loc.put("z", p.getLocation().getBlockZ());
-            obj.put("username", p.getName());
-            obj.put("location", loc);
-            obj.put("currency_transactions", mP.getTransactions());
-            return Response.ok(obj.toJSONString()).build();
+            return Response.ok(mP.toJson().toJSONString()).build();
         }
         else {
             return Response.status(404).build();

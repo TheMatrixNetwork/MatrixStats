@@ -3,28 +3,24 @@ package org.matrixnetwork.stats.handler;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.matrixnetwork.stats.MatrixStats;
-import org.matrixnetwork.stats.entity.CurrencyData;
 import org.matrixnetwork.stats.entity.MatrixPlayer;
+import org.matrixnetwork.stats.entity.PlayerStats;
 import org.matrixnetwork.stats.manager.DataManager;
 
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 
-public class CurrencyHandler {
+public class StatsHandler {
     private BukkitTask runnable;
 
-    private static CurrencyHandler instance;
+    private static StatsHandler instance;
 
-    private CurrencyHandler() {
+    private StatsHandler() {
     }
 
-    public static CurrencyHandler getInstance() {
+    public static StatsHandler getInstance() {
         if(instance == null)
             init();
 
@@ -32,7 +28,7 @@ public class CurrencyHandler {
     }
 
     public static void init() {
-        instance = new CurrencyHandler();
+        instance = new StatsHandler();
 
         instance.runnable = new BukkitRunnable() {
             @Override
@@ -52,8 +48,19 @@ public class CurrencyHandler {
                         }
 
                         double balance = MatrixStats.getEcon().getBalance(p);
-                        if(player.getTransactions() == null|| player.getTransactions().size() == 0 || player.getTransactions().get(player.getTransactions().size()-1).getAmount() != balance) {
-                            CurrencyData data = new CurrencyData(balance, LocalDateTime.now(), player);
+                        if(player.getStats() == null|| player.getStats().size() == 0) {
+                            PlayerStats data = new PlayerStats(p.getExp(),
+                                    p.getFoodLevel(),
+                                    p.getLocation().getX(),
+                                    p.getLocation().getY(),
+                                    p.getLocation().getZ(),
+                                    balance,
+                                    p.getHealth(),
+                                    p.getGameMode().toString(),
+                                    p.getLastDamageCause() == null ? null : p.getLastDamageCause().getCause().toString(),
+                                    p.getRemainingAir(),
+                                    LocalDateTime.now(),
+                                    player);
                             session.merge(data);
                         }
                     }
