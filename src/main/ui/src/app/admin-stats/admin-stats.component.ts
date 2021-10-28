@@ -62,10 +62,18 @@ export class AdminStatsComponent implements OnInit {
 
   async setData():Promise<any[]> {
     var pStats = await this.statsService.getPlayerStats("S1mple133").toPromise();
+    var series: { value: number; name: Date; }[] = [];
+
+    console.log(pStats);
+
+    pStats.stats.forEach(stat => series.push({
+      value: stat.money,
+      name: new Date(stat.timestamp)
+    }));
 
     var s1mple133 = {
       name: "S1mple133",
-      series: pStats.currency_transactions
+      series: series
     }
 
     console.log(s1mple133);
@@ -81,11 +89,7 @@ export class AdminStatsComponent implements OnInit {
   }
 
   dateTickFormatting(val: any): string {
-    if (!(val instanceof Date)) {
-      val = new Date(val);
-    }
-
-    return (<Date>val).toLocaleString('en-US');
+    return (<Date>val).toLocaleString('en-US', {month: "numeric", day: "numeric", hour: "numeric", minute:"numeric"});
   }
 
   onSelect(data: any): void {

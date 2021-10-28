@@ -48,7 +48,7 @@ public class StatsHandler {
                         }
 
                         double balance = MatrixStats.getEcon().getBalance(p);
-                        if(player.getStats() == null|| player.getStats().size() == 0) {
+
                             PlayerStats data = new PlayerStats(p.getExp(),
                                     p.getFoodLevel(),
                                     p.getLocation().getX(),
@@ -62,7 +62,6 @@ public class StatsHandler {
                                     LocalDateTime.now(),
                                     player);
                             session.merge(data);
-                        }
                     }
 
                     t.commit();
