@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.matrixnetwork</groupId>
-	<artifactId>MatrixStats</artifactId>
+	<artifactId>MatrixStats-dev</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
@@ -14,6 +14,15 @@
 
 	<repositories>
 		<repository>
+			<id>codemc-repo</id>
+			<url>https://repo.codemc.org/repository/maven-public/</url>
+		</repository>
+		<repository>
+			<id>java.net-Public</id>
+			<name>Maven Java Net Snapshots and Releases</name>
+			<url>https://maven.java.net/content/groups/public/</url>
+		</repository>
+		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
 		</repository>
@@ -21,8 +30,40 @@
 			<id>IntellectualSites</id>
 			<url>https://mvn.intellectualsites.com/content/repositories/releases/</url>
 		</repository>
+		<repository>
+			<id>jboss</id>
+			<name>jboss repo</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 	<dependencies>
+		<dependency>
+			<groupId>com.github.MilkBowl</groupId>
+			<artifactId>VaultAPI</artifactId>
+			<version>1.7</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.json.bind</groupId>
+			<artifactId>javax.json.bind-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>yasson</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
@@ -42,9 +83,45 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.intellectualsites.fawe</groupId>
-			<artifactId>FAWE-Bukkit</artifactId>
-			<version>1.16-725</version>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.1.2.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-jdk-http</artifactId>
+			<version>2.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+			<version>3.1.2.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-servlet-initializer</artifactId>
+			<version>3.1.2.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.3.23.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.27</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.xephi</groupId>
+			<artifactId>authme</artifactId>
+			<version>5.6.0-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -70,6 +147,43 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<!-- Run shade goal on package phase -->
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>org.matrixnetwork.stats.MatrixStats</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<executions>
+					<execution>
+						<id>Restart test server</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${basedir}/scripts/restart-server.sh</executable>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

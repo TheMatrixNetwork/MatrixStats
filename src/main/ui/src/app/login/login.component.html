@@ -1,0 +1,24 @@
+<div class="center">
+  <div class="form-container" fxLayout="column" fxLayoutGap="10px">
+    <form [formGroup]="loginForm" (submit)="submit()">
+      <mat-form-field fxLayoutAlign="center center" appearance="outline">
+        <mat-label> Username </mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="loginForm.controls.username.touched && loginForm.controls.username.invalid">
+          <span>This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field fxLayoutAlign="center center" appearance="outline">
+        <mat-label> Password </mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+          <span>This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="failedLogin">
+        <span>Wrong username or password!</span>
+      </mat-error>
+      <button fxLayoutAlign="center center" mat-raised-button color="primary" type="submit">Log In</button>
+    </form>
+  </div>
+</div>
