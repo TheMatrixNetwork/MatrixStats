@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Path("/auth")
 public class AuthResource {
-    private final JSONParser parser = new JSONParser();
+    private JSONParser parser = new JSONParser();
 
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,8 +40,6 @@ public class AuthResource {
 
         if(AuthMeApi.getInstance().checkPassword((String) obj.get("username"), (String) obj.get("password"))) {
             String token = Auth.getInstance().generateToken((String) obj.get("username"));
-            MatrixStats.getPlugin().getLogger().info((String) obj.get("username"));
-            MatrixStats.getPlugin().getLogger().info(token);
 
             if (token == null) {
                 return Response.status(403).build();
@@ -53,8 +51,6 @@ public class AuthResource {
             return Response.ok(retObj.toJSONString()).build();
         }
         else {
-            MatrixStats.getPlugin().getLogger().info((String) obj.get("username"));
-            MatrixStats.getPlugin().getLogger().info((String) obj.get("password"));
             return Response.status(403).build();
         }
     }
