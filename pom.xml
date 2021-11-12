@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.matrixnetwork</groupId>
-	<artifactId>MatrixStats-dev</artifactId>
+	<artifactId>MatrixStats</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
@@ -165,22 +165,6 @@
 									<mainClass>org.matrixnetwork.stats.MatrixStats</mainClass>
 								</transformer>
 							</transformers>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>exec-maven-plugin</artifactId>
-				<groupId>org.codehaus.mojo</groupId>
-				<executions>
-					<execution>
-						<id>Restart test server</id>
-						<phase>package</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>${basedir}/scripts/restart-server.sh</executable>
 						</configuration>
 					</execution>
 				</executions>
