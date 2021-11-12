@@ -68,6 +68,6 @@ public class StatsHandler {
 
                 }
             }
-        }.runTaskTimer(MatrixStats.getPlugin(), 20*60, 20*60);
+        }.runTaskTimer(MatrixStats.getPlugin(), 20*60*10, 20*60*10);
     }
 }
