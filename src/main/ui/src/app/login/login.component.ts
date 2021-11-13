@@ -4,6 +4,7 @@ import {StatsService, Token} from "../stats.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import {Router} from "@angular/router";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,13 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   formBuilder: FormBuilder;
   _statsService: StatsService;
+  _authService: AuthService;
   failedLogin: boolean;
 
-  constructor(formBuilder: FormBuilder, statsService: StatsService, private router: Router) {
+  constructor(formBuilder: FormBuilder, statsService: StatsService, authService: AuthService, private router: Router) {
     this.formBuilder = formBuilder;
     this._statsService = statsService;
+    this._authService = authService;
     this.loginForm = this.formBuilder.group({
       username: [null, Validators.required],
       password: [null, Validators.required]
@@ -27,6 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this._authService.isLoggedIn()) {
+      this.router.navigate(['home']);
+    }
   }
 
   async submit() {
@@ -34,16 +40,16 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    var resp = await this._statsService.getToken({
-      username: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    }).subscribe(
-        (data: Token) =>  {
-          Cookie.set("token", data.token.toString(), 1);
-          this.router.navigate(['adminstats']);
-        },
-        (error: HttpErrorResponse) => this.failedLogin = true
-    );
+    this._authService.login(this.loginForm.value.username,
+      this.loginForm.value.password).then(success => {
+      if(this._authService.isLoggedIn()) {
+        this.router.navigate(['home']);
+      }
+      else {
+        this.failedLogin = true;
+      }
+    })
+
   }
 
 }

@@ -10,6 +10,6 @@ export class AppComponent {
   currencyData: any;
 
   ngOnInit() {
-
+    window.console.log = function () { };
   }
 }

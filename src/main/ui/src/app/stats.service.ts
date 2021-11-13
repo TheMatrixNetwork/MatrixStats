@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {AuthService} from "./auth.service";
 
 export interface Location {
   x: number;
@@ -41,20 +42,20 @@ export interface PlayerStats {
   providedIn: 'root'
 })
 export class StatsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _authService: AuthService) { }
 
   public getPlayerStats(playerName: string): Observable<MatrixPlayer> {
     //return this.http.get<PlayerStats>(`http://localhost:8080/api/stats/${playerName}`);
     return this.http.get<MatrixPlayer>(`http://localhost:8080/api/stats/${playerName}`);
   }
 
-  public getToken(account: Account): any {
+  public getSkinName(): any {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Authorization':  this._authService.getToken(),
       })
     };
 
-    return this.http.post<Token>(`http://localhost:8080/api/auth`, account, httpOptions);
+    return this.http.get<any>(`http://localhost:8080/api/skin/`, httpOptions);
   }
 }
