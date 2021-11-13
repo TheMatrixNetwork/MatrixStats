@@ -3,9 +3,16 @@ Content-Type: application/json
 
 {
   "username": "s1mple133",
-  "password": "password1"
+  "password": "marioa11"
 }
+
+> {% client.global.set("auth_token", response.body.token); %}
 
 ###
 
 GET http://localhost:8080/api/stats/S1mple133
+
+###
+
+GET http://localhost:8080/api/skin
+Authorization: {{auth_token}}

@@ -20,7 +20,7 @@ services:
       - ./src/main/ui:/usr/src/app/api
       - /usr/src/app/app-ui/node_modules
   server:
-    image: s1mple133/matrixnetwork:1.0.0
+    image: s1mple133/matrixnetwork:latest
     restart: always
     ports:
       - 25565:25565

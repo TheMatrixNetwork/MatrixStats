@@ -62,7 +62,10 @@ public class Auth {
     }
 
     public Token getToken(String token) {
-        return tokenList.get(token);
+        if(tokenList.containsKey(token)) {
+            return tokenList.get(token);
+        }
+        return null;
     }
 
 

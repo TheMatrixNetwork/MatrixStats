@@ -12,6 +12,7 @@ import org.matrixnetwork.stats.entity.PlayerStats;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Properties;
+import java.util.logging.Level;
 
 public class DataManager {
     private static DataManager instance;
@@ -32,6 +33,7 @@ public class DataManager {
             settings.put(Environment.SHOW_SQL, "false");
 
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+            java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.WARNING);
 
             settings.put(Environment.HBM2DDL_AUTO, "update");
 
