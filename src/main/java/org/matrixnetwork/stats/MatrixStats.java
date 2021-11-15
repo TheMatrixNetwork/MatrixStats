@@ -74,9 +74,9 @@ public class MatrixStats extends JavaPlugin{
 		rc.register(AuthResource.class);
 		rc.register(CorsFilter.class);
 		server = JdkHttpServerFactory.createHttpServer(
-				URI.create( "http://localhost:8080/api" ), rc );
+				URI.create( "http://localhost:8081/api" ), rc );
 
-		getLogger().info("Listening on http://localhost:8080/api !");
+		getLogger().info("Listening on http://localhost:8081/api !");
 	}
 
 	private boolean setupEconomy() {
