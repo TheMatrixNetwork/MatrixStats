@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {AuthService} from "./auth.service";
+import { environment } from 'src/environments/environment';
 
 export interface Location {
   x: number;
@@ -46,7 +47,7 @@ export class StatsService {
 
   public getPlayerStats(playerName: string): Observable<MatrixPlayer> {
     //return this.http.get<PlayerStats>(`http://localhost:8080/api/stats/${playerName}`);
-    return this.http.get<MatrixPlayer>(`https://api.matrixnetwork.org/api/stats/${playerName}`);
+    return this.http.get<MatrixPlayer>(environment.url + `/api/stats/${playerName}`);
   }
 
   public getSkinName(): any {
@@ -56,6 +57,6 @@ export class StatsService {
       })
     };
 
-    return this.http.get<any>(`https://api.matrixnetwork.org/api/skin/`, httpOptions);
+    return this.http.get<any>(environment.url + `/api/skin/`, httpOptions);
   }
 }

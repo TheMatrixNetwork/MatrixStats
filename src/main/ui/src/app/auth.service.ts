@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import {Account, Token} from "./stats.service";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class AuthService {
       })
     };
 
-    return this.http.post<Token>(`https://api.matrixnetwork.org/api/auth`, account, httpOptions);
+    return this.http.post<Token>(environment.url + `/api/auth`, account, httpOptions);
   }
 
   public getToken() {
