@@ -34,7 +34,7 @@ export class AuthService {
       })
     };
 
-    return this.http.post<Token>(`http://localhost:8080/api/auth`, account, httpOptions);
+    return this.http.post<Token>(`https://api.matrixnetwork.org/api/auth`, account, httpOptions);
   }
 
   public getToken() {

@@ -46,7 +46,7 @@ export class StatsService {
 
   public getPlayerStats(playerName: string): Observable<MatrixPlayer> {
     //return this.http.get<PlayerStats>(`http://localhost:8080/api/stats/${playerName}`);
-    return this.http.get<MatrixPlayer>(`http://localhost:8080/api/stats/${playerName}`);
+    return this.http.get<MatrixPlayer>(`https://api.matrixnetwork.org/api/stats/${playerName}`);
   }
 
   public getSkinName(): any {
@@ -56,6 +56,6 @@ export class StatsService {
       })
     };
 
-    return this.http.get<any>(`http://localhost:8080/api/skin/`, httpOptions);
+    return this.http.get<any>(`https://api.matrixnetwork.org/api/skin/`, httpOptions);
   }
 }
