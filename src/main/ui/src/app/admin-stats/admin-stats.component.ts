@@ -64,7 +64,9 @@ export class AdminStatsComponent implements OnInit {
     var pStats = await this.statsService.getPlayerStats("S1mple133").toPromise();
     var series: { value: number; name: Date; }[] = [];
 
-    console.log(pStats);
+    if(pStats == undefined) {
+      return this.multi;
+    }
 
     pStats.stats.forEach(stat => series.push({
       value: stat.money,
