@@ -53,7 +53,8 @@ public class MatrixStats extends JavaPlugin{
 	@Override
 	public void onEnable() {
 		if (!setupEconomy() ) {
-			getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+			getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!",
+					getDescription().getName()));
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -61,7 +62,9 @@ public class MatrixStats extends JavaPlugin{
 		BukkitTask r = new BukkitRunnable() {
 			@Override
 			public void run() {
-				skinsRestorerAPI = ((SkinsRestorer) getServer().getPluginManager().getPlugin("SkinsRestorer")).getSkinsRestorerAPI();
+				skinsRestorerAPI = ((SkinsRestorer) getServer().getPluginManager()
+						.getPlugin("SkinsRestorer"))
+						.getSkinsRestorerAPI();
 			}
 		}.runTask(this);
 
@@ -83,7 +86,11 @@ public class MatrixStats extends JavaPlugin{
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
-		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+
+		RegisteredServiceProvider<Economy> rsp = getServer()
+				.getServicesManager()
+				.getRegistration(Economy.class);
+
 		if (rsp == null) {
 			return false;
 		}
