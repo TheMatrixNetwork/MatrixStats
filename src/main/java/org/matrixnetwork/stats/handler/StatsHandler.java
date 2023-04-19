@@ -48,7 +48,10 @@ public class StatsHandler {
                         }
 
                         double balance = MatrixStats.getEcon().getBalance(p);
-
+                        int prestige = MatrixStats.getElitePrestige(p.getName());
+                        int guildRank = MatrixStats.getGuildRank(p.getName());
+                        int sfLevel = MatrixStats.getSlimefunLevel(p.getName());
+                        int threatTier = MatrixStats.getThreatTier(p.getName());
                             PlayerStats data = new PlayerStats(p.getExp(),
                                     p.getFoodLevel(),
                                     p.getLocation().getX(),
@@ -60,6 +63,10 @@ public class StatsHandler {
                                     p.getLastDamageCause() == null ? null : p.getLastDamageCause().getCause().toString(),
                                     p.getRemainingAir(),
                                     LocalDateTime.now(),
+                                    guildRank,
+                                    threatTier,
+                                    sfLevel,
+                                    prestige,
                                     player);
                             session.merge(data);
                     }

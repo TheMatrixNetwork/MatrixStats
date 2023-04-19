@@ -24,6 +24,10 @@ public class PlayerStats {
     private String lastDamageCause;
     private int remainingAir;
     private LocalDateTime timeStamp;
+    private int guildRank;
+    private int threatTier;
+    private int sfLevel;
+    private int prestige;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = MatrixPlayer.class)
     private MatrixPlayer matrixPlayer;
@@ -39,6 +43,10 @@ public class PlayerStats {
                        String lastDamageCause,
                        int remainingAir,
                        LocalDateTime timeStamp,
+                       int guildRank,
+                       int threatTier,
+                       int sfLevel,
+                       int prestige,
                        MatrixPlayer matrixPlayer) {
         this.exp = exp;
         this.foodLevel = foodLevel;
@@ -51,6 +59,10 @@ public class PlayerStats {
         this.lastDamageCause = lastDamageCause;
         this.remainingAir = remainingAir;
         this.timeStamp = timeStamp;
+        this.setGuildRank(guildRank);
+        this.setThreatTier(threatTier);
+        this.setSfLevel(sfLevel);
+        this.setPrestige(prestige);
         this.matrixPlayer = matrixPlayer;
     }
 
@@ -125,8 +137,43 @@ public class PlayerStats {
         jo.put("last_damage_cause", getLastDamageCause());
         jo.put("remaining_air", getRemainingAir());
         jo.put("timestamp", getTimeStamp().toString());
+        jo.put("guildRank", getGuildRank());
+        jo.put("threatTier", getThreatTier());
+        jo.put("sfLevel", getSfLevel());
+        jo.put("prestige", getPrestige());
 
         return jo;
     }
 
+    public int getGuildRank() {
+        return guildRank;
+    }
+
+    public void setGuildRank(int guildRank) {
+        this.guildRank = guildRank;
+    }
+
+    public int getThreatTier() {
+        return threatTier;
+    }
+
+    public void setThreatTier(int threatTier) {
+        this.threatTier = threatTier;
+    }
+
+    public int getSfLevel() {
+        return sfLevel;
+    }
+
+    public void setSfLevel(int sfLevel) {
+        this.sfLevel = sfLevel;
+    }
+
+    public int getPrestige() {
+        return prestige;
+    }
+
+    public void setPrestige(int prestige) {
+        this.prestige = prestige;
+    }
 }

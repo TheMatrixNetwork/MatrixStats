@@ -1,9 +1,15 @@
 package org.matrixnetwork.stats;
 
+import com.gmail.nossr50.datatypes.player.PlayerProfile;
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
+import com.magmaguy.elitemobs.playerdata.ElitePlayerInventory;
 import com.sun.net.httpserver.HttpServer;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.milkbowl.vault.economy.Economy;
 import net.skinsrestorer.api.SkinsRestorerAPI;
 import net.skinsrestorer.bukkit.SkinsRestorer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.annotation.dependency.Dependency;
@@ -23,6 +29,10 @@ import org.matrixnetwork.stats.rest.StatsResource;
 import org.matrixnetwork.stats.rest.filter.CorsFilter;
 
 import java.net.URI;
+import java.util.List;
+
+import static com.magmaguy.elitemobs.adventurersguild.GuildRank.getActiveGuildRank;
+import static com.magmaguy.elitemobs.adventurersguild.GuildRank.getGuildPrestigeRank;
 
 @Plugin(name = "MatrixStats", version = "1.0.0")
 @Description(value = "This Plugin handles the stats system on Matrix")
@@ -30,6 +40,12 @@ import java.net.URI;
 @ApiVersion(Target.v1_13)
 @Dependency(value = "SkinsRestorer")
 @Dependency(value = "Vault")
+@Dependency(value = "Magic")
+@Dependency(value = "EliteMobs")
+@Dependency(value = "Slimefun")
+@Dependency(value = "ProjectKorra")
+@Dependency(value = "Mcmmo")
+
 public class MatrixStats extends JavaPlugin{
 	
 	private static MatrixStats plugin;
@@ -76,6 +92,7 @@ public class MatrixStats extends JavaPlugin{
 		rc.register(SkinResource.class);
 		rc.register(AuthResource.class);
 		rc.register(CorsFilter.class);
+
 		server = JdkHttpServerFactory.createHttpServer(
 				URI.create( "http://localhost:8081/api" ), rc );
 
@@ -107,5 +124,56 @@ public class MatrixStats extends JavaPlugin{
 	
 	public static org.bukkit.plugin.Plugin getPlugin() {
 		return plugin;
+	}
+
+//	private int getLevel(PlayerProfile mcMMOProfile, PrimarySkillType skillType) {
+//		int skillLevel = mcMMOProfile.getSkillLevel(skillType);
+//		return Math.min(skillLevel, MAX_LEVEL);
+//	}
+
+	public static int getGuildRank(String playerName) {
+		Player player = Bukkit.getPlayer(playerName);
+		if (player == null) {
+			return 0;
+		} else {
+			// Get the player's guild level from elite mobs
+			return getActiveGuildRank(player, true);
+		}
+	}
+
+	public static int getElitePrestige(String playerName) {
+		Player player = Bukkit.getPlayer(playerName);
+		if (player == null) {
+			return 0;
+		} else {
+			// Get the player's elite prestige from elite mobs
+			return getGuildPrestigeRank(player, true);
+		}
+	}
+
+	public static int getThreatTier(String playerName) {
+		Player player = Bukkit.getPlayer(playerName);
+		if (player == null) {
+			return 0;
+		} else {
+			return ElitePlayerInventory.playerInventories.get(player.getUniqueId()).getFullPlayerTier(true);
+		}
+	}
+
+	public static int getSlimefunLevel(String playerName) {
+		Player player = Bukkit.getPlayer(playerName);
+		if (player == null) {
+			return 0;
+		} else {
+			try {
+				io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile slimefunProfile = Slimefun.getRegistry().getPlayerProfiles().get(player.getUniqueId());
+				List<String> titles = Slimefun.getRegistry().getResearchRanks();
+				float fraction = (float) slimefunProfile.getResearches().size() / Slimefun.getRegistry().getResearches().size();
+				return (int) (fraction * (titles.size() - 1));
+			} catch(NullPointerException e){
+				return 0;
+			}
+
+		}
 	}
 }
