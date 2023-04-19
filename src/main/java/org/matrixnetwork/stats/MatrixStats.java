@@ -7,7 +7,6 @@ import com.sun.net.httpserver.HttpServer;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.milkbowl.vault.economy.Economy;
 import net.skinsrestorer.api.SkinsRestorerAPI;
-import net.skinsrestorer.bukkit.SkinsRestorer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -44,7 +43,7 @@ import static com.magmaguy.elitemobs.adventurersguild.GuildRank.getGuildPrestige
 @Dependency(value = "EliteMobs")
 @Dependency(value = "Slimefun")
 @Dependency(value = "ProjectKorra")
-@Dependency(value = "Mcmmo")
+@Dependency(value = "mcMMO")
 
 public class MatrixStats extends JavaPlugin{
 	
@@ -78,9 +77,7 @@ public class MatrixStats extends JavaPlugin{
 		BukkitTask r = new BukkitRunnable() {
 			@Override
 			public void run() {
-				skinsRestorerAPI = ((SkinsRestorer) getServer().getPluginManager()
-						.getPlugin("SkinsRestorer"))
-						.getSkinsRestorerAPI();
+				skinsRestorerAPI = SkinsRestorerAPI.getApi();
 			}
 		}.runTask(this);
 

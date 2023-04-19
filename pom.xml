@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.17.1-R0.1-SNAPSHOT</version>
+			<version>1.19.3-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -123,8 +123,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.skinsrestorer</groupId>
-			<artifactId>skinsrestorer</artifactId>
-			<version>14.1.6-SNAPSHOT</version>
+			<artifactId>skinsrestorer-api</artifactId>
+			<version>14.2.10</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -226,36 +226,36 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>restart-devserver</id>
-			<activation>
-				<property>
-					<name>prod</name>
-					<value>!true</value>
-				</property>
-			</activation>
+<!--	<profiles>-->
+<!--		<profile>-->
+<!--			<id>restart-devserver</id>-->
+<!--			<activation>-->
+<!--				<property>-->
+<!--					<name>prod</name>-->
+<!--					<value>!true</value>-->
+<!--				</property>-->
+<!--			</activation>-->
 
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>exec-maven-plugin</artifactId>
-						<groupId>org.codehaus.mojo</groupId>
-						<executions>
-							<execution>
-								<id>Restart test server</id>
-								<phase>package</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>${basedir}/scripts/restart-server</executable>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+<!--			<build>-->
+<!--				<plugins>-->
+<!--					<plugin>-->
+<!--						<artifactId>exec-maven-plugin</artifactId>-->
+<!--						<groupId>org.codehaus.mojo</groupId>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<id>Restart test server</id>-->
+<!--								<phase>package</phase>-->
+<!--								<goals>-->
+<!--									<goal>exec</goal>-->
+<!--								</goals>-->
+<!--								<configuration>-->
+<!--									<executable>${basedir}/scripts/restart-server</executable>-->
+<!--								</configuration>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+<!--				</plugins>-->
+<!--			</build>-->
+<!--		</profile>-->
+<!--	</profiles>-->
 </project>
