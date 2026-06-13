@@ -1,2 +1,0 @@
-docker cp target/MatrixStats-1.0.0.jar matrixstats_server_1:/usr/src/server/plugins
-docker restart matrixstats_server_1
