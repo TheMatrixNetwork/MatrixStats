@@ -1,7 +1,7 @@
 name: MatrixStats
 version: ${project.version}
 main: org.matrixnetwork.stats.MatrixStats
-api-version: '1.13'
+api-version: '1.21'
 author: S1mple133
 description: AuthMe shim exposing HTTPS endpoints for the MatrixSite Node backend
 depend: [AuthMe]
