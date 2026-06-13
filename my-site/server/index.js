@@ -4,10 +4,10 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import path from "node:path";
 import fs from "node:fs";
+import https from "node:https";
 import { fileURLToPath } from "node:url";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import crypto from "node:crypto";
 import mysql from "mysql2/promise";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
@@ -36,12 +36,83 @@ const COOKIE_SECURE = String(
   process.env.COOKIE_SECURE || (COOKIE_SAMESITE === "none" ? "1" : "0")
 ) === "1";
 
-const AUTHME_TABLE = safeSqlId(process.env.AUTHME_TABLE || "authme", "authme");
-const AUTHME_USER_COLUMN = safeSqlId(process.env.AUTHME_USER_COLUMN || "username", "username");
-const AUTHME_PASS_COLUMN = safeSqlId(process.env.AUTHME_PASS_COLUMN || "password", "password");
-const AUTHME_HASH_ALGO = (process.env.AUTHME_HASH_ALGO || "").toLowerCase();
-const AUTHME_SALT_POSITION = (process.env.AUTHME_SALT_POSITION || "prefix").toLowerCase();
 const AUTH_PROVIDER = (process.env.AUTH_PROVIDER || "authme").toLowerCase();
+
+// AuthMe shim: the MatrixStats Bukkit plugin exposes HTTPS endpoints that
+// wrap AuthMe's Java API (which is the only supported way to verify AuthMe
+// passwords). The Node backend delegates to it for AUTH_PROVIDER=authme.
+const AUTHME_SHIM_URL = (process.env.AUTHME_SHIM_URL || "https://127.0.0.1:8081").replace(/\/$/, "");
+const AUTHME_SHIM_SECRET = process.env.AUTHME_SHIM_SECRET || "";
+const AUTHME_SHIM_CA_PATH = process.env.AUTHME_SHIM_CA_PATH || "";
+const AUTHME_SHIM_INSECURE = String(process.env.AUTHME_SHIM_INSECURE || "0") === "1";
+const AUTHME_SHIM_TIMEOUT_MS = Number(process.env.AUTHME_SHIM_TIMEOUT_MS || 6000);
+
+let authmeShimAgent = null;
+function getAuthmeShimAgent() {
+  if (authmeShimAgent) return authmeShimAgent;
+  const options = { keepAlive: true };
+  if (AUTHME_SHIM_INSECURE) {
+    options.rejectUnauthorized = false;
+  } else if (AUTHME_SHIM_CA_PATH) {
+    try {
+      options.ca = fs.readFileSync(AUTHME_SHIM_CA_PATH);
+    } catch (err) {
+      console.error(`Failed to read AUTHME_SHIM_CA_PATH (${AUTHME_SHIM_CA_PATH}):`, err.message);
+    }
+  }
+  authmeShimAgent = new https.Agent(options);
+  return authmeShimAgent;
+}
+
+async function callAuthmeShim(pathname, payload) {
+  if (!AUTHME_SHIM_SECRET) {
+    throw new Error("AUTHME_SHIM_SECRET is not configured");
+  }
+  const target = new URL(`${AUTHME_SHIM_URL}${pathname}`);
+  if (target.protocol !== "https:") {
+    throw new Error(`AUTHME_SHIM_URL must use https (got ${target.protocol})`);
+  }
+  const body = Buffer.from(JSON.stringify(payload || {}), "utf8");
+
+  return await new Promise((resolve, reject) => {
+    const request = https.request(
+      {
+        method: "POST",
+        host: target.hostname,
+        port: target.port || 443,
+        path: target.pathname + (target.search || ""),
+        headers: {
+          "content-type": "application/json",
+          "content-length": body.length,
+          "x-auth-shim-secret": AUTHME_SHIM_SECRET,
+        },
+        agent: getAuthmeShimAgent(),
+        timeout: AUTHME_SHIM_TIMEOUT_MS,
+      },
+      (response) => {
+        const chunks = [];
+        response.on("data", (chunk) => chunks.push(chunk));
+        response.on("end", () => {
+          const text = Buffer.concat(chunks).toString("utf8");
+          let parsed = {};
+          try {
+            parsed = text ? JSON.parse(text) : {};
+          } catch {
+            parsed = { raw: text };
+          }
+          resolve({ status: response.statusCode || 0, body: parsed });
+        });
+      }
+    );
+
+    request.on("timeout", () => {
+      request.destroy(new Error("authme shim request timed out"));
+    });
+    request.on("error", reject);
+    request.write(body);
+    request.end();
+  });
+}
 const MATRIX_TABLE = safeSqlId(process.env.MATRIX_TABLE || "matrix_logins", "matrix_logins");
 const MATRIX_USER_COLUMN = safeSqlId(process.env.MATRIX_USER_COLUMN || "username", "username");
 const MATRIX_PASS_COLUMN = safeSqlId(process.env.MATRIX_PASS_COLUMN || "password_hash", "password_hash");
@@ -260,51 +331,31 @@ async function initDb() {
   `);
 }
 
-function shaHash(algorithm, input) {
-  return crypto.createHash(algorithm).update(input).digest("hex");
+async function verifyAuthmeViaShim(username, password) {
+  try {
+    const { status, body } = await callAuthmeShim("/verify", { username, password });
+    if (status === 200 && body?.ok === true) return true;
+    if (status === 200) return false;
+    console.warn(`AuthMe shim verify returned status ${status}`, body);
+    return false;
+  } catch (err) {
+    console.error("AuthMe shim verify call failed", err);
+    return false;
+  }
 }
 
-async function verifyAuthmePassword(plain, storedHash, storedSalt) {
-  if (!storedHash) return false;
-
-  if (
-    AUTHME_HASH_ALGO === "bcrypt"
-    || storedHash.startsWith("$2a$")
-    || storedHash.startsWith("$2b$")
-    || storedHash.startsWith("$2y$")
-  ) {
-    return bcrypt.compare(plain, storedHash);
+async function changeAuthmePasswordViaShim(username, currentPassword, newPassword) {
+  try {
+    const { status, body } = await callAuthmeShim("/change-password", {
+      username,
+      currentPassword,
+      newPassword,
+    });
+    return { status, body };
+  } catch (err) {
+    console.error("AuthMe shim change-password call failed", err);
+    return { status: 502, body: { ok: false, error: "shim_unreachable" } };
   }
-
-  if (storedHash.startsWith("$SHA$")) {
-    const parts = storedHash.split("$");
-    const salt = parts[2];
-    const hash = parts[3];
-    if (!salt || !hash) return false;
-    return shaHash("sha256", `${salt}${plain}`) === hash;
-  }
-
-  if (storedHash.startsWith("SHA256$")) {
-    const [, salt, hash] = storedHash.split("$");
-    if (!salt || !hash) return false;
-    return shaHash("sha256", `${salt}${plain}`) === hash;
-  }
-
-  if (storedHash.startsWith("SHA512$")) {
-    const [, salt, hash] = storedHash.split("$");
-    if (!salt || !hash) return false;
-    return shaHash("sha512", `${salt}${plain}`) === hash;
-  }
-
-  if (storedSalt && (AUTHME_HASH_ALGO === "sha256" || AUTHME_HASH_ALGO === "sha512")) {
-    const algorithm = AUTHME_HASH_ALGO;
-    const salted = AUTHME_SALT_POSITION === "suffix"
-      ? `${plain}${storedSalt}`
-      : `${storedSalt}${plain}`;
-    return shaHash(algorithm, salted) === storedHash;
-  }
-
-  return false;
 }
 
 async function verifyMatrixPassword(plain, storedHash) {
@@ -532,32 +583,79 @@ app.post("/api/auth/login", async (req, res) => {
       return;
     }
 
-    const rows = await db.query(
-      `SELECT ${AUTHME_USER_COLUMN} AS username, ${AUTHME_PASS_COLUMN} AS password
-       FROM ${AUTHME_TABLE}
-       WHERE LOWER(${AUTHME_USER_COLUMN}) = LOWER(?)
-       LIMIT 1`,
-      [username]
-    );
-
-    const record = rows?.[0];
-    if (!record) {
-      res.status(401).json({ message: "Invalid username or password." });
-      return;
-    }
-
-    const ok = await verifyAuthmePassword(password, record.password);
+    const ok = await verifyAuthmeViaShim(username, password);
     if (!ok) {
       res.status(401).json({ message: "Invalid username or password." });
       return;
     }
 
-    issueSessionCookie(res, record.username, Boolean(remember));
-    res.json({ success: true, user: record.username, isAdmin: isAdminUser(record.username) });
+    issueSessionCookie(res, username, Boolean(remember));
+    res.json({ success: true, user: username, isAdmin: isAdminUser(username) });
   } catch (err) {
     console.error("Login failed", err);
     res.status(500).json({ message: "Login failed." });
   }
+});
+
+app.post("/api/auth/change-password", async (req, res) => {
+  const sessionUser = readSession(req);
+  if (!sessionUser) {
+    res.status(401).json({ message: "Not logged in." });
+    return;
+  }
+  const { currentPassword, newPassword } = req.body || {};
+  if (!currentPassword || !newPassword) {
+    res.status(400).json({ message: "currentPassword and newPassword are required." });
+    return;
+  }
+  if (newPassword.length < 6) {
+    res.status(400).json({ message: "New password must be at least 6 characters." });
+    return;
+  }
+
+  if (AUTH_PROVIDER === "matrix_logins") {
+    try {
+      const rows = await db.query(
+        `SELECT ${MATRIX_USER_COLUMN} AS username, ${MATRIX_PASS_COLUMN} AS password
+         FROM ${MATRIX_TABLE}
+         WHERE LOWER(${MATRIX_USER_COLUMN}) = LOWER(?)
+         LIMIT 1`,
+        [sessionUser]
+      );
+      const record = rows?.[0];
+      if (!record || !(await verifyMatrixPassword(currentPassword, record.password))) {
+        res.status(401).json({ message: "Current password is incorrect." });
+        return;
+      }
+      const newHash = await bcrypt.hash(newPassword, 10);
+      await db.query(
+        `UPDATE ${MATRIX_TABLE} SET ${MATRIX_PASS_COLUMN} = ? WHERE LOWER(${MATRIX_USER_COLUMN}) = LOWER(?)`,
+        [newHash, sessionUser]
+      );
+      res.json({ success: true });
+      return;
+    } catch (err) {
+      console.error("change-password (matrix) failed", err);
+      res.status(500).json({ message: "Change password failed." });
+      return;
+    }
+  }
+
+  const { status, body } = await changeAuthmePasswordViaShim(sessionUser, currentPassword, newPassword);
+  if (status === 200 && body?.ok === true) {
+    res.json({ success: true });
+    return;
+  }
+  if (status === 401 || body?.error === "bad_current_password") {
+    res.status(401).json({ message: "Current password is incorrect." });
+    return;
+  }
+  if (status === 404 || body?.error === "not_registered") {
+    res.status(404).json({ message: "Account not registered." });
+    return;
+  }
+  console.warn("change-password shim returned", status, body);
+  res.status(502).json({ message: "Change password failed." });
 });
 
 app.post("/api/auth/logout", (req, res) => {

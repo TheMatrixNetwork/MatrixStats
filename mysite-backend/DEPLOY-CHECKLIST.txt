@@ -1,11 +1,23 @@
 MatrixSite backend deployment checklist
 
-1. Copy the backend app files to /srv/mysite-backend on the Linux server.
-2. Copy my-site.env.example to my-site.env and replace the placeholder values.
-3. Confirm MariaDB is running locally on the Linux machine.
-4. Confirm the database name and credentials match the values in my-site.env.
-5. Make start.sh executable: chmod +x start.sh.
-6. Enable the systemd service from systemd/mysite-backend.service.
-7. If using nginx, update nginx/backend.conf.example and add it to your site config.
-8. Build the frontend separately and point it at the backend using VITE_API_BASE.
-9. Restart the backend service after any env changes.
+1. Copy the backend app files to /srv/mysite-backend on the Linux server,
+   including the my-site/server/ folder from the repo.
+2. cp my-site.env.example my-site.env  and fill in:
+     - MYSQL_* (host, user, password, database)
+     - JWT_SECRET, ADMIN_USERS, CORS_ORIGINS, FRONTEND_ORIGIN
+     - AUTHME_SHIM_SECRET   (value from plugins/MatrixStats/config.yml)
+     - AUTHME_SHIM_CA_PATH  (path to a copy of auth-shim-cert.pem)
+3. Confirm MariaDB is running locally; the database and credentials match.
+4. Make start.sh executable:  chmod +x start.sh
+5. Install / enable systemd unit:
+     cp systemd/mysite-backend.service /etc/systemd/system/
+     systemctl daemon-reload
+     systemctl enable --now mysite-backend
+6. (Optional) Drop nginx/backend.conf.example into your nginx site config
+   and reload nginx.
+7. Build the frontend separately (npm run build inside my-site/) and point
+   it at the backend with VITE_API_BASE.
+8. Make sure the Minecraft server has the MatrixStats plugin installed
+   alongside AuthMe, so the shim endpoints are reachable.
+9. Restart the backend service after any my-site.env changes:
+     systemctl restart mysite-backend
