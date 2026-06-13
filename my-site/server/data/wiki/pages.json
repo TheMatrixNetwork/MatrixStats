@@ -1,0 +1,1565 @@
+{
+  "pages": [
+    {
+      "slug": "getting-started",
+      "title": "Getting Started",
+      "summary": "Spawn rules, starter tools, and your first objectives.",
+      "icon": "🩰",
+      "tags": [
+        "basics",
+        "survival",
+        "spawn"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "spawn-plaza",
+          "title": "Spawn Plaza",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Spawn is a safe zone with repair stations, quest NPCs, and the map board.\n\nUse /home to set a return point once you leave the plaza.\n\n- Grab your starter kit from the supply chest.\n- Pick a direction: north is tundra, south is forests.\n- Check the daily bounty board for extra rewards."
+        },
+        {
+          "id": "nether-gate",
+          "title": "The Nether Gate",
+          "requires": {
+            "all": [
+              {
+                "type": "boss",
+                "id": "stone_warden"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "The Nether Gate activates once the Stone Warden is defeated.\n\nBring fire resistance and soul sand boots for safer travel."
+        }
+      ]
+    },
+    {
+      "slug": "mobs-abyssal-wyrm",
+      "title": "Holy Sentry",
+      "summary": "A deep-cave leviathan that guards crystal caches.",
+      "icon": "",
+      "tags": [
+        "mobs",
+        "boss",
+        "caves"
+      ],
+      "requires": {
+        "any": [
+          {
+            "type": "boss",
+            "id": "shadow_golem"
+          },
+          {
+            "type": "item",
+            "id": "wyrm_scale",
+            "quantity": 1
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "behavior",
+          "title": "Behavior",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "The Abyssal Wyrm patrols flooded caverns between Y-20 and Y-40.\n\nIt retreats into water when below 40% health, summoning drownlings."
+        },
+        {
+          "id": "loot",
+          "title": "Loot Table",
+          "requires": {
+            "all": [
+              {
+                "type": "boss",
+                "id": "abyssal_wyrm"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "- Wyrm Scale (x1-2)\n- Abyssal Core (rare)\n- Echo Pearl"
+        }
+      ]
+    },
+    {
+      "slug": "ironfist",
+      "title": "Iron Fist",
+      "summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "icon": "💃",
+      "tags": [
+        "boss",
+        "holy",
+        "technical"
+      ],
+      "requires": null,
+      "bosses": [
+        {
+          "id": "iron_fist",
+          "name": "Iron Fist",
+          "description": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour",
+          "icon": "✊",
+          "stats": [
+            {
+              "key": "Health",
+              "value": "600"
+            },
+            {
+              "key": "Speed",
+              "value": "0.3"
+            },
+            {
+              "key": "Damage",
+              "value": "40"
+            },
+            {
+              "key": "Apples",
+              "value": "5"
+            }
+          ]
+        },
+        {
+          "id": "True_Iron_Fist",
+          "name": "True Iron Fist",
+          "description": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ",
+          "icon": "🪙",
+          "stats": []
+        }
+      ],
+      "items": [
+        {
+          "id": "Bottle",
+          "name": "Bottles!",
+          "description": "Testing 123",
+          "icon": "🍼",
+          "stats": [
+            {
+              "key": "Saturation",
+              "value": "100"
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "new-section1",
+          "title": "Iron Fist",
+          "requires": null,
+          "bossId": "",
+          "itemId": "Bottle",
+          "contentMarkdown": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\n\n\n## Apples\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+        },
+        {
+          "id": "rituals2",
+          "title": "True Iron Fist",
+          "requires": {
+            "all": [
+              {
+                "type": "item",
+                "id": "ancient_shard",
+                "quantity": 3
+              }
+            ]
+          },
+          "bossId": "iron_fist",
+          "itemId": "",
+          "contentMarkdown": "Three shards can be combined at the Obsidian Anvil to unlock the Rift ritual.\n\nCompleting the ritual reveals additional lore pages in the wiki."
+        },
+        {
+          "id": "ironfist_true_journal",
+          "title": "True Iron Fist's Journal",
+          "requires": {
+            "any": [
+              {
+                "type": "boss",
+                "id": "iron_fist"
+              },
+              {
+                "type": "item",
+                "id": "purified_soul",
+                "quantity": 1
+              },
+              {
+                "type": "boss",
+                "id": "holy_sentry"
+              }
+            ]
+          },
+          "bossId": "iron_fist",
+          "itemId": "Bottle",
+          "contentMarkdown": "### True Iron Fist's Journal\n\"Damn it you killed me! Do you have any idea what you've done!? My task for centuries was to protect the inner sanctum. Every day for 900 years I pushed a button that has benefited you adventurers greatly. No wonder my master left human civilization. \n\nHumans take everything for granted. How did you get here anyways? Hm A mysterious voice guiding you you say? No.... it can't be. Listen to me traveler, No matter what he says, do not listen to the voice. He wants to get rid of the button. You see, the voice you've been talking to is that of a powerful necromancer named Rumpelstiltskin. \n\nRumpel has one goal, to help monsters take over the universe. The button is what gives monsters their vulnerability to the sun. If he removes it this world will enter chaos! You must not listen to him! \n "
+        }
+      ]
+    },
+    {
+      "slug": "skills-mage",
+      "title": "Mage",
+      "summary": "Staff-based spellcaster with reflect, burst spells, and control tools.",
+      "icon": "",
+      "tags": [
+        "skills",
+        "mage"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "mage-overview",
+          "title": "Overview And Stat Focus",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Stat focus: ARC, INT. Energy type: mana.\n\nMage scales heavily through casting throughput and range windows.\n\nKey scaling notes:\n- Passive mana return scales with INT (`int/10`)\n- Neptune, Explosion Spell, and Energy Flux include INT/ARC formulas\n- Chronoprohiberis cooldown and duration/range include ARC and INT\n- Shared class scaling applies for VIT/INT/ARC/MIT baselines"
+        },
+        {
+          "id": "mage-abilities",
+          "title": "Abilities",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "- Mage Passive: Hoe/staff attacks restore mana and improve weapon output.\n- Reflect: Chance to return damage when attacked with a staff.\n- Neptune: Trident enhancement with lightning and multi-trident follow-up chances.\n- Explosion Spell: Chance-based damage burst while attacking with a staff.\n- Heal Spell: Extra regeneration when below a health threshold.\n- Energy Flux: Right-click hoe beam attack with scaling line damage/range.\n- Chronoprohiberis: Clock-triggered local time-stop with control effects."
+        }
+      ]
+    },
+    {
+      "slug": "quest-0",
+      "title": "A Mysterious New Friend",
+      "summary": "A strange meeting with Crowley, a forgotten being bound in the void, that reveals the fractured legacy of Crash Cringle.",
+      "icon": "⛓️",
+      "tags": [
+        "story",
+        "crowley",
+        "main-quest",
+        "lore"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [
+        {
+          "id": "TOTEM_OF_UNDYING",
+          "name": "Totem of Undying",
+          "description": "A rare item Crowley asks for while preparing to escape his magical restraints.",
+          "icon": "🗿",
+          "stats": [
+            {
+              "key": "Required Amount",
+              "value": "1"
+            },
+            {
+              "key": "Used For",
+              "value": "Crowley's ritual"
+            }
+          ]
+        },
+        {
+          "id": "GUNPOWDER",
+          "name": "Gunpowder",
+          "description": "Used as sulphur in Crowley's ritual to create the Sesro Shears.",
+          "icon": "💥",
+          "stats": [
+            {
+              "key": "Required Amount",
+              "value": "64"
+            },
+            {
+              "key": "Crowley's Name",
+              "value": "Sulphur"
+            }
+          ]
+        },
+        {
+          "id": "ANCIENT_RUNE_SOULBOUND",
+          "name": "[SF] Soulbound Rune",
+          "description": "A slimefun soulbound rune used in the ritual to create the Sesro Shears.",
+          "icon": "🔵",
+          "stats": [
+            {
+              "key": "Soulbound",
+              "value": "True"
+            },
+            {
+              "key": "Used For",
+              "value": "Creating the Sesro Shears"
+            }
+          ]
+        },
+        {
+          "id": "SHEARS",
+          "name": "Shears",
+          "description": "Ordinary shears that are transformed through Crowley's ritual.",
+          "icon": "✂️",
+          "stats": [
+            {
+              "key": "Required Amount",
+              "value": "1"
+            },
+            {
+              "key": "Transformed Into",
+              "value": "Sesro Shears"
+            }
+          ]
+        },
+        {
+          "id": "SESRO_SHEARS",
+          "name": "Sesro Shears",
+          "description": "Magical shears created from sulphur, shears, and a Soulbound Rune. Used to cut Crowley free from his cuffs.",
+          "icon": "✂️",
+          "stats": [
+            {
+              "key": "Created During Quest",
+              "value": "True"
+            },
+            {
+              "key": "Used For",
+              "value": "Freeing Crowley"
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 0,
+                "questName": "A Mysterious New Friend",
+                "status": "started"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "You find **Crowley** bound somewhere deep and unpleasant, surprised that a living adventurer has managed to stumble into his prison. His first impression is hardly warm: he complains about the smell, mocks your appearance, and only then introduces himself as a forgotten, all-powerful being trapped in a body and restrained by magical cuffs.\n\nCrowley claims that **Crash** is responsible for imprisoning him, and he quickly turns the conversation toward a bargain. If you help free him, he promises a reward. The task begins simply enough on paper: gather **sulphur**, a **Totem of Undying**, **shears**, and a **Soulbound Rune** so Crowley can craft a way out of his magical restraints."
+        },
+        {
+          "id": "freeing-crowley",
+          "title": "Freeing Crowley",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 0,
+                "questName": "A Mysterious New Friend",
+                "status": "in_progress"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "ANCIENT_RUNE_SOULBOUND",
+          "contentMarkdown": "Crowley cannot be freed by ordinary force. The cuffs on his hands radiate with enough power that even bending or breaking the metal directly is not an option. Instead, Crowley wants the materials for what he describes as a pair of “magic scissors.”\n\nTo continue, bring Crowley the full set of requested items: **64 Gunpowder**, **1 Totem of Undying**, **1 Soulbound Ancient Rune**, and **1 pair of Shears**. Once everything is gathered, return to Crowley so he can explain the ritual needed to create the **Sesro Shears** and cut him loose."
+        },
+        {
+          "id": "completion-summary",
+          "title": "After Crowley Is Freed",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 0,
+                "questName": "A Mysterious New Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "SESRO_SHEARS",
+          "contentMarkdown": "After you return with Crowley’s ingredients, he explains the ritual: make a pile of sulphur, bury the shears inside it, and drop the Soulbound Rune onto the pile. The mixture sizzles and creates a pair of **Sesro Shears**, which are then used to cut Crowley free from his cuffs.\n\nOnce freed, Crowley reveals that the Totem of Undying was not really for the shears at all. Instead, it leads into a much larger truth: the world is in danger. According to Crowley, **Crash Cringle** was once the physical embodiment of Matrix itself. When Crash was “killed” during a great war, reality could not simply stop existing, so Crash split into multiple forms. Each form represents a different part of reality, and each has plagued the world in its own way.\n\nCrowley chooses you as the person who will help gather these forms back together and restore balance. He leaves to investigate which “realix” has the strongest foothold in the world, promising that you will be in touch — though he dodges the question of your promised reward."
+        },
+        {
+          "id": "quest-details",
+          "title": "Quest Details",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 0,
+                "questName": "A Mysterious New Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "## Quest Details\n\n- **Quest ID:** `0`\n- **Quest Name:** **A Mysterious New Friend**\n- **Starter NPC:** `citizens#30` — Crowley\n- **Required Skill Level:** greater than `3`\n- **Primary Objective:** Help free Crowley from his prison.\n- **Objective Text:** *god these things are not comfortable*\n- **Completion Reward:** Grants the player `matrix.quest.rescueCrowley`\n- **Stage Reward:** `10` quest XP and `1000` skill XP after the opening conversation.\n\n## Required Items\n\n- **1x Totem of Undying**\n- **64x Gunpowder** — referred to by Crowley as sulphur\n- **1x Ancient Rune [Soulbound]**\n- **1x Shears**\n\n## Important Terms\n\n- **Crowley:** A forgotten, powerful being trapped in a body and bound by magical cuffs.\n- **Crash:** The being Crowley says trapped him.\n- **Crash Cringle:** A mystical being described as the physical embodiment of Matrix.\n- **Realix:** The term Crowley uses for the split forms/fragments of Crash Cringle.\n- **Sesro Shears:** The magically created shears used to cut Crowley free."
+        },
+        {
+          "id": "lore",
+          "title": "Lore Revealed",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 0,
+                "questName": "A Mysterious New Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Crowley’s story reframes Matrix as a world still suffering from the aftermath of an ancient war. Crash Cringle was not merely powerful; he was tied directly to the structure of reality. His death caused Matrix to fracture into separate embodied forces, each one representing a different aspect of the world and each one causing damage in its own way.\n\nThe quest also leaves Crowley intentionally ambiguous. He presents himself as an ally and chooses the player over “some other able body,” but he also admits that, once free, he *could* have simply turned the player to ash and left. The result is a partnership built less on trust and more on mutual usefulness — Crowley needs someone active in the world, and the player needs answers about the larger danger facing Matrix."
+        },
+        {
+          "id": "full-dialogue",
+          "title": "Full Dialogue",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 0,
+                "questName": "A Mysterious New Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "### Starting Dialogue — Meeting Crowley\n\n- **Crowley:** \"What the....Now how on earth did an innocent chap like yourself end up down here?\"\n- **Crowley:** \"And god.. what is that smell?\"\n- **Crowley:** \"Have you ever thought of washing off all of that rotting flesh on your clothes?\"\n- **Narration:** *Crowley looks at you sternly*\n- **Player:** \"And just who are you?\"\n- **Crowley:** \"Why, I'm Crowley\"\n- **Narration:** *Crowley relaxes a little*\n- **Crowley:** \"Seems I've been long forgotten by history, but long story short I'm what you might call...\"\n- **Crowley:** \"An all powerful being - trapped inside this body\"\n- **Player:** \"Sounds a bit cliche don't you think?\"\n- **Crowley:** \"Tell that to Crash, he's the one who trapped me here. Say why don't you give me a hand?\"\n- **Player:** \"Sure, I love helping random strangers bound in the void. But uh what's in it for me?\"\n- **Crowley:** \"And you say I'm cliche. Fine. I'll ensure you are properly rewarded for freeing me.\"\n- **Crowley:** \"Now I'll need you to fetch me a few items.\"\n- **Crowley:** \"Let's see uhh I'll need some sulphur, a totem of undying, shears, and a soulbound rune\"\n- **Player:** \"wtf, can't I just metal bend the cuffs off of you and call it a day?\"\n- **Narration:** *The cuffs on crowley's hands radiate... you sense the power held within them*\n- **Crowley:** \"Yeah.... these are magic cuffs. Gonna need to make some magic scissors to break these bad boys.\"\n- **Crowley:** \"Well off ya ho, chop chop.\"\n- **Crowley:** \"Oh and here grab that bottle in my pocket. It'll help ya out\"\n\n### Completion Dialogue — Freeing Crowley\n\n- **Crowley:** \"Well look who's returned, and with all of the necessary items no doubt\"\n- **Crowley:** \"Y'know we could be a real team you and I\"\n- **Crowley:** \"Alright make a nice little pile of the sulphur in the corner\"\n- **Crowley:** \"Bury the shears in the sulphur and drop the soulbound rune on the pile\"\n- **Crowley:** \"Should sizzle a bit, then use the shears to cut me free\"\n- **Player:** \"Uh what about the totem. Wasn't exactly the easiest thing on your list to get.\"\n- **Crowley:** \"Oh right the totem, we'll get into that once I'm free.\"\n- **Narration:** *You follow the instructions and create a pair of Sesro Shears*\n- **Narration:** *4*Sizzle*\n- **Crowley:** \"Ahhhhhh feels good to be free\"\n- **Player:** \"Soooo this totem\"\n- **Crowley:** \"Ah yeah, well how do I say this.....\"\n- **Crowley:** \"The entire world is in danger and you just so happen to be one of the lucky people who are gonna help save it\"\n- **Player:** \">.<\"\n- **Crowley:** \"Long story short, there was once this mystical being known as Crash Cringle\"\n- **Player:** \"Lol Cringle?\"\n- **Crowley:** \"Crash was the physical embodiment of all of Matrix\"\n- **Crowley:** \"Unfortunately, he was \\\"killed\\\" in the great war a long time ago\"\n- **Player:** \"The all powerful mystical being was killed in a war?\"\n- **Crowley:** \"Well I wouldn't toot his horn that muhc. But yes\"\n- **Crowley:** \"There was some dark magic at play\"\n- **Crowley:** \"When \\\"Crash Cringle\\\" died, well the physical emobident of our reality can't just stop existing.\"\n- **Player:** \"mhm\"\n- **Crowley:** \"So he split apart into different forms each representing a different part of our reality\"\n- **Crowley:** \"And each of them has plagued this world in a different way\"\n- **Player:** \"So what can I do?\"\n- **Crowley:** \"Well lovely of you to ask\"\n- **Crowley:** \"You can help me bring all of them together again and restore balance.\"\n- **Player:** \"Alright sounds easy enough\"\n- **Player:** \"But y'know we still just met. How do I know this is even real?\"\n- **Crowley:** \"Well now that I'm free I could've just turned you to ash and left.\"\n- **Crowley:** \"Found some other able body to help me\"\n- **Crowley:** \"But I chose you {player}\"\n- **Player:** \"fair enough\"\n- **Player:** \"so how do we start?\"\n- **Crowley:** \"Well I've been locked here for a while, so I need to look around the world and see which uh \\\"realix\\\" has the biggest foothold in the world\"\n- **Crowley:** \"We'll be in touch\"\n- **Player:** \"What about my reward?\"\n- **Crowley:** \"What reward?\""
+        }
+      ]
+    },
+    {
+      "slug": "quest-1",
+      "title": "Find an Old Friend",
+      "summary": "Crowley sends you to find Flames, a lost soul who knows more about the Realixes and the strange fate awaiting the souls of Matrix.",
+      "icon": "👻",
+      "tags": [
+        "story",
+        "crowley",
+        "flames",
+        "realix",
+        "lore"
+      ],
+      "requires": {
+        "all": [
+          {
+            "type": "quest",
+            "questName": "A Mysterious New Friend",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [
+        {
+          "id": "AMBER",
+          "name": "Amber",
+          "description": "A hardened golden gem acquired from resin. Flames asks for Amber before helping you further on your journey.",
+          "icon": "🟠",
+          "stats": [
+            {
+              "key": "Required Amount",
+              "value": "30"
+            },
+            {
+              "key": "Known As",
+              "value": "A rare material in this world"
+            },
+            {
+              "key": "Used For",
+              "value": "Gaining Flames' guidance"
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questName": "Find an Old Friend",
+                "status": "started"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Crowley reaches out through a projection, still trapped where you first found him even after being freed from his cuffs. He explains that the same spell binding him to his body also fixed him to that place, but he has still been able to explore through the spirit world and gather information.\n\nThis quest expands the mystery of the **Realixes**. Crowley believes there are **six** of them, but only two are currently clear enough to track: **The Corruption** and **The Lost**. Corruption appears to be spreading through magic, twisting both people and the world itself. The Lost is harder to understand, so Crowley sends you to find an old friend named **Flames**, a soul left wandering after the war."
+        },
+        {
+          "id": "seeking-flames",
+          "title": "Seeking Flames",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questName": "Find an Old Friend",
+                "status": "in_progress"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Crowley cannot explain The Lost on his own, so he points you toward **Flames**, a lost soul who has been roaming the world without a true destination. Flames may not appear like an ordinary person, and Crowley warns that you will likely see him as he sees himself — or at least as he wants to be seen.\n\nYour next step is to locate Flames near spawn and ask him what he knows about the Realixes. The conversation quickly reveals that The Lost has dominion over souls, and that lost souls are not just spirits wandering by chance. They are connected to a larger imbalance in the world."
+        },
+        {
+          "id": "completion-summary",
+          "title": "What Flames Reveals",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questName": "Find an Old Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "After speaking with Flames, the nature of **The Lost Realix** becomes clearer. The Lost has dominion over souls and direct control over lost souls like Flames. Flames explains that everyone becomes a lost soul eventually, but he also makes it clear that this is not how the world is supposed to work. Souls being \"lost\" after death is a symptom of the Realix's influence.\n\nFlames also reveals that a Realix cannot truly be destroyed because it is woven into reality itself. What can be defeated is the Realix's living or physical manifestation. However, removing that manifestation creates a vacancy; something must take its place. The answer lies in special **Totems**, which can store living Realixes and lock them away from disturbing the natural balance of the world.\n\nTo begin tracking The Lost, Flames asks for **Amber**, a rare material formed from resin. Once you bring enough Amber, Flames tells you that The Lost does not usually interact with the living world. If you want to reach him, you will need to get his attention by collecting more souls and following a clue written in an unreadable, enchanting-table-like script."
+        },
+        {
+          "id": "quest-details",
+          "title": "Quest Details",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questName": "Find an Old Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "AMBER",
+          "contentMarkdown": "## Quest Details\n\n- **Quest Name:** **Find an Old Friend**\n- **Main Characters:** **Crowley** and **Flames**\n- **Primary Objective:** Speak with Flames and learn more about The Lost Realix.\n- **Secondary Objective:** Bring Flames enough **Amber** so he can help point you toward The Lost.\n- **Required Item:** **30x Amber**\n- **Follow-up:** This quest leads directly into the next part of the main Realix storyline.\n\n## Important Concepts\n\n- **Spirit World:** A realm Crowley claims to have explored while still bound to his prison.\n- **Realixes:** Six powerful aspects of reality born from the fractured state of Matrix.\n- **The Corruption:** A Realix associated with magic, corruption, and planted seeds of corruption throughout the world.\n- **The Lost:** A Realix with dominion over souls and control over lost souls.\n- **Totems:** Special vessels capable of storing living Realixes and preventing them from manipulating the world's natural balance.\n- **Amber:** A rare resin-born material Flames requests before guiding you further."
+        },
+        {
+          "id": "lore",
+          "title": "Lore Revealed",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questName": "Find an Old Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Crowley confirms that there are believed to be **six Realixes** in the world. Each Realix governs part of reality, but that does not necessarily mean every part of their domain is evil by itself. Magic, for example, belongs to Corruption's domain, but Crowley distinguishes between magic existing as part of the world and Corruption actively using it to twist people and plant seeds of corruption.\n\nFlames deepens the lore around death and souls. The world has normalized lost souls, but Flames says this is not natural. The Lost Realix has made the loss of souls upon death feel ordinary, when in truth it is a distortion of the world's intended balance.\n\nThe quest also introduces the key method for dealing with Realixes: they are not simply killed. Their physical manifestations can be defeated, but their place in reality must be contained or replaced. The special Totems are the first clear path toward capturing them without letting reality collapse further out of balance."
+        },
+        {
+          "id": "full-dialogue",
+          "title": "Full Dialogue",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questName": "Find an Old Friend",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "### Crowley's Projection\n\n- **Crowley:** \"Ah, if it isn't %javascript_nameWithPet%\"\n- **Crowley:** \"So turns out, the spell binding me to this body also bound me to that location\"\n- **Crowley:** \"So I'm still stuck where you found me for the time being\"\n- **Crowley:** \"Anyways, I'm still able to do spells and such which is how you're able to see my projection\"\n- **Crowley:** \"I've spent the past few days exploring through the spirit world\"\n- **Player:** \"Spirit World?\"\n- **Crowley:** \"That's...... another conversation\"\n- **Crowley:** \"Let's stick to saving the world from corruption first\"\n- **Player:** \"Alright what do we need to do\"\n- **Narration:** *Crowley gazes up at the ceiling.... as if reminiscing something.*\n- **Crowley:** \"As far as I can tell, there are 6 Realixes in the world\"\n- **Crowley:** \"There are two on my radar right now, The Corruption and The Lost\"\n- **Crowley:** \"The corruption seems to be making attempts to corrupt the world and the people within it\"\n- **Player:** \"How so?\"\n- **Crowley:** \"You fancy magic yes?\"\n- **Player:** \"I uh dabble\"\n- **Crowley:** \"Magic is part of Corruptions domain.\"\n- **Crowley:** \"Now that's not to say magic is necessarily corrupt\"\n- **Player:** \"Sounds like that's literally what you said xD\"\n- **Crowley:** \"Look everything in this world belongs to a Realix. We can discuss the politics of Magic all we want\"\n- **Crowley:** \"But at the end of the day, it is still corruption\"\n- **Player:** \"mhm\"\n- **Crowley:** \"So all I know is Corruption is using magic to \\\"corrupt\\\" the people and planting seeds to corrupt the world\"\n- **Player:** \"And The Lost?\"\n- **Crowley:** \"Honestly, no idea\"\n- **Player:** \"...\"\n- **Player:** \"Didn't you describe yourself as \\\"all powerful\\\" or all knowing or something\"\n- **Crowley:** \"The Lost is a pretty....ambiguous, Realix. Could never quite make sense of it.\"\n- **Crowley:** \"But I know somoene who can help\"\n- **Crowley:** \"We call him Flames\"\n- **Crowley:** \"After the war he became a lost soul\"\n- **Crowley:** \"Poor lad's just been roaming around the world with no real destination in mind\"\n- **Player:** \"So I find Flames and what?\"\n- **Player:** \"If he's just a soul can he even speak? Can I even see him?\"\n- **Crowley:** \"I believe you'll see him how he sees himself. Or how he at least wants us to see him\"\n- **Crowley:** \"Either way, you'll just have to find out.\"\n- **Crowley:** \"Good luck %javascript_nameWithPet%\"\n\n### Finding Flames\n\n- **Crowley:** \"Hey....Flames is that you?\"\n- **Unknown:** *KALSABJABFKAF*\n- **Player:** \"Well I don't speak ghost\"\n- **Flames:** \"What do you want..\"\n- **Narration:** *Flames looks at you with confusion.*\n- **Flames:** \"Hm you can understand me... That means you are either ruthless or a fool\"\n- **Player:** \"Em, honestly a little of both\"\n- **Flames:** \"Why do you bother me?\"\n- **Player:** \"Because I need to know about these Realixes\"\n- **Player:** \"i have no idea what's going on\"\n- **Flames:** \"Realixes... ah\"\n- **Flames:** \"The Lost Realix has dominion over our souls\"\n- **Flames:** \"And he has direct control over us lost souls\"\n- **Player:** \"How did you become a lost soul?\"\n- **Flames:** \"We all become lost souls.... eventually\"\n- **Player:** \"If I defeat the Lost Realix, will you be free?\"\n- **Flames:** \"One cannot simply defeat a Realix, it's ingrained in the very fabric of our reality\"\n- **Flames:** \"However, you can defeat the physical manisfestation of a Realix.\"\n- **Flames:** \"This however, would mean someone or something needs to take its place.\"\n- **Player:** \"Well I can tell you with certainty that will not be me\"\n- **Flames:** \"There are special totems you can collect. These totems can be used to store the living Realix\"\n- **Flames:** \"And lock them away from ever manipulating the natural balances of the world.\"\n- **Flames:** \"It's not normal for living beings to \\\"lose\\\" their souls upon death\"\n- **Player:** \"Ah...these Realixes explain a lot of what I just took to be the way things are..\"\n- **Flames:** \"Gather each Totem for each Realix and you'll be able to summon forth and capture what you're looking for.\"\n- **Player:** \"Could I uh get maybe a hint on how to get started...\"\n- **Flames:** \"There's a rare material in this world, some know it as Amber.\"\n- **Flames:** \"Bring me enough Amber and I will help you on your journey\"\n\n### Returning With Amber\n\n- **Flames:** \"Amber.... how I've longed for you...\"\n- **Flames:** \"Thank you\"\n- **Flames:** \"I've met the Lost Realix on a few occasion\"\n- **Flames:** \"Unlike his counterparts, he doesn't do much interacting with the living world.\"\n- **Flames:** \"If you want to find him you're going to need to get his attention.\"\n- **Flames:** \"Your skin....I can feel the souls gasping for air in your bones.\"\n- **Flames:** \"Collect more souls, you're going to need them in order to communicate with him.\"\n- **Flames:** *LAKSMKBFKABSA*\n- **Flames:** \"Go there and you may find what you're looking for\"\n- **Player:** \"I uh don't speak enchanting table\"\n- **Flames:** \"Find someone who does\"\n- **Flames:** \"Collect souls and go there.\""
+        }
+      ]
+    },
+    {
+      "slug": "quest-2",
+      "title": "Explore the Ruins",
+      "summary": "After learning about The Lost, you gather souls, decode Flames' clue, and discover a hidden ruin containing two stranded adventurers and a broken portal.",
+      "icon": "🏚️",
+      "tags": [
+        "story",
+        "crowley",
+        "lost",
+        "ruins",
+        "realix",
+        "lore"
+      ],
+      "requires": {
+        "all": [
+          {
+            "type": "quest",
+            "questId": 1,
+            "questName": "Find an Old Friend",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "started"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "After speaking with **Flames**, you are left with two strange instructions: collect souls, and follow a location spoken in a language you cannot understand. The first part is grim but direct. If **The Lost** has dominion over souls, then gathering different kinds of souls may be enough to draw his attention or prepare you for whatever comes next.\n\nThe clue itself remains unreadable until you return to **Crowley**. When you repeat Flames' distorted words, Crowley recognizes the language immediately as \"enchanting table\" and realizes Flames was giving coordinates. The path now points toward the **Lost Ruins**, a remote and dangerous place that may hold the next sign of The Lost Realix."
+        },
+        {
+          "id": "gathering-souls",
+          "title": "Gathering Souls",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "in_progress"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Before following Flames' clue, you decide to gather a variety of different souls to cover your bases. You decide to gather souls from several sources: **players**, **drowned**, **phantoms**, **chickens**, **glow squids**, and **zombies**. Once enough souls have been gathered, return to Crowley and explain what Flames told you."
+        },
+        {
+          "id": "lost-ruins",
+          "title": "The Lost Ruins",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "in_progress"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Crowley translates Flames' clue into a location and sends you to investigate the **Lost Ruins**. The ruins are located far from spawn, around **x=10,005, y=80, z=811**.\n\nThe journey is not only about reaching the ruins, but also about discovering what still remains there. Flames implied that this place may bring you closer to The Lost, but what you find is stranger than a simple shrine or dungeon."
+        },
+        {
+          "id": "completion-summary",
+          "title": "What Was Found in the Ruins",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Inside the ruins, you find two stranded adventurers: **BatTiger** and **Mjfaithyuan**. They are thrilled to see you, but they have no intention of leaving. According to them, they originally came to the ruins looking for treasure, only to be chased away and forced into hiding.\n\nTheir discovery turns out to be far more important than diamonds. The real treasure of the ruins was a **secret portal** leading to a desolate town. On the other side, they encountered a disturbing figure calling himself **Rogue Crash**. Unfortunately, the portal was broken after they found it — but not destroyed in the normal sense. Mjfaithyuan explains that when he broke it, the portal somehow became lodged inside him.\n\nThe portal still exists, but it can only be accessed through Mjfaithyuan. Speak to him to gain entry into the valley."
+        },
+        {
+          "id": "quest-details",
+          "title": "Quest Details",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "## Quest Details\n\n- **Quest Name:** **Explore the Ruins**\n- **Main Characters:** **Crowley**, **BatTiger**, and **Mjfaithyuan**\n- **Primary Objective:** Gather souls, decode Flames' clue, and investigate the Lost Ruins.\n- **Location:** **Lost Ruins**, around **x=10,005, y=80, z=811**\n- **Follow-up:** Speak with **Mjfaithyuan** to access the strange portal hidden within him.\n\n## Soul-Gathering Objectives\n\n- **10x Player souls**\n- **20x Drowned souls**\n- **10x Phantom souls**\n- **10x Chicken souls**\n- **5x Glow Squid souls**\n- **15x Zombie souls**\n\n## Important Discoveries\n\n- Flames' unreadable clue was written or spoken in enchanting table script.\n- The Lost Ruins contain a hidden portal.\n- The portal leads to a desolate town.\n- A figure named **Rogue Crash** exists beyond the portal.\n- The portal was broken, but somehow became trapped inside **Mjfaithyuan**."
+        },
+        {
+          "id": "lore",
+          "title": "Lore Revealed",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "This is the introduction to the \"Lost Valley\""
+        },
+        {
+          "id": "full-dialogue",
+          "title": "Full Dialogue",
+          "requires": {
+            "all": [
+              {
+                "type": "quest",
+                "questId": 2,
+                "questName": "Explore the Ruins",
+                "status": "finished"
+              }
+            ]
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "### Soul-Gathering Objective\n\n- **Player:** *\"Hm, not sure where I should get the souls from... I guess I'll get some different ones to cover my bases.....\"*\n\n### Returning to Crowley\n\n- **Crowley:** \"How'd the chat with Flames go?\"\n- **Player:** \"Eh... he doesn't exactly seem to be in the right state of mind\"\n- **Player:** \"But he did shed some light on a few things\"\n- **Crowley:** \"Wonderful, perhaps we'll defeat the Realixes with knowledge!\"\n- **Crowley:** \"I'm sure that will work in battle\"\n- **Narration:** *Crowley sighs*\n- **Crowley:** \"Look, I read up on current events in this little library here.\"\n- **Crowley:** \"Turns out, we can summon forth each realix if we collect the necessary items\"\n- **Player:** \"and I'm certain that will be easy\"\n- **Crowley:** \"Yeah, honestly not really.\"\n- **Crowley:** \"And unfortunately these books don't tell me the items.\"\n- **Crowley:** \"Just clues, tales about what the items might be.\"\n- **Crowley:** \"Fortunately, I'm not a complete arse so I'll look along with you.\"\n- **Player:** \"Flames mentioned a location, but I couldn't understand him\"\n- **Crowley:** \"What did he say?\"\n- **Player:** \"I uh will butcher it\"\n- **Crowley:** \"Give it your best go\"\n- **Player:** \"LAKSMKBFKABSA\"\n- **Crowley:** \"Ah, enchanting table\"\n- **Crowley:** \"Flames gave us coordinates\"\n- **Crowley:** \"How about you go and check it out.\"\n- **Crowley:** \"We can meet back here once we've found some kind of results\"\n\n### Searching the Ruins\n\n- **Marshy:** \"WHOA!\"\n- **Marshy:** \"DUDE LOOK IT'S %javascript_nameWithPet%\"\n- **Mjfaithyuan:** \"OMG YOU'RE HERE\"\n- **Player:** \"uhh\"\n- **Marshy:** \"DUDE we've been stuck in here FOREVER\"\n- **Marshy:** \"We saw these sick ruins and thought maybe we could find some diamonds\"\n- **Mjfaithyuan:** \"Yea! But we got chased away and we've been living in here since\"\n- **Player:** \"Well I cleared a bit of a path on the way here-\"\n- **Marshy:** \"No no no, we're not going ANYWHERE\"\n- **Player:** \"uh I think I'm gonna go....\"\n- **Mjfaithyuan:** \"WAITTTTTT\"\n- **Mjfaithyuan:** \"Are you looking for the treasure in the ruins too?\"\n- **Marshy:** \"Because we found it!\"\n- **Player:** \"That's great, but I'm not really looking for diamonds\"\n- **Mjfaithyuan:** \"HA HE STILL THINKS THE TREASURE HERE IS DIAMONDS\"\n- **Marshy:** \"IKR\"\n- **Marshy:** \"Ok we'll tell you\"\n- **Marshy:** \"The treasure here was actually a secret portal\"\n- **Player:** \"Portal?\"\n- **Mjfaithyuan:** \"SHHHH\"\n- **Mjfaithyuan:** \"Yes\"\n- **Mjfaithyuan:** \"We went in once but it's kind of freaky\"\n- **Marshy:** \"Yeah It's some kind of desolate town\"\n- **Marshy:** \"There was this creepy guy who called himself Rogue Crash\"\n- **Player:** \"Wait where is the portal now?\"\n- **Mjfaithyuan:** \"Oh we broke it\"\n- **Player:** \"....\"\n- **Marshy:** \"Are you one of those people who DON'T break every mob spawner they find??\"\n- **Player:** \"ugh okay well I guess thanks anyways\"\n- **Marshy:** \"WAITTT\"\n- **Marshy:** \"Mj broke it, but instead of it breaking it's inside him now.\"\n- **Player:** \"Inside...?\"\n- **Mjfaithyuan:** \"yep. If you want to go just talk to me and I'll take ya\""
+        }
+      ]
+    },
+    {
+      "slug": "quest-3",
+      "title": "Lost Valley",
+      "summary": "The trail leads deeper into uncharted territory.",
+      "icon": "🌄",
+      "tags": [
+        "main-story",
+        "crowley",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 2,
+        "questName": "Explore the Ruins",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Readyyyyy? :D Let's GOOOOOOO\"*\n\nThe mood is high as your group pushes into the Lost Valley. What you find there sends things in a new direction entirely."
+        }
+      ]
+    },
+    {
+      "slug": "quest-8",
+      "title": "The Lost Valley",
+      "summary": "Someone — or something — is waiting in the valley, and they are not happy to see you.",
+      "icon": "🗺️",
+      "tags": [
+        "main-story",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 2,
+        "questName": "Explore the Ruins",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"What part of 'Leave now' did you not understand?\"*\n> *\"You know who I am.\"*\n\nNot everyone here is a stranger. Press forward and uncover what this valley is hiding."
+        }
+      ]
+    },
+    {
+      "slug": "quest-5",
+      "title": "The Order",
+      "summary": "You encounter the Order — a faction long cut off from the rest of the world.",
+      "icon": "⚔️",
+      "tags": [
+        "main-story",
+        "order",
+        "quest"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Well look who showed up.\"*\n> *\"Ignore him — he's kind of a buzzkill. His son's lost all hope.\"*\n\nThe Order has been waiting. Their situation is grim, but they may be the allies you need."
+        }
+      ]
+    },
+    {
+      "slug": "quest-12",
+      "title": "The First Sacred Rite",
+      "summary": "Ancient trials overseen by a keeper of old knowledge. The first rite begins here.",
+      "icon": "🕯️",
+      "tags": [
+        "sacred-rites",
+        "quest"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Ah, so you wish to complete the first sacred rite? Please, come closer — let me speaketh you the knowledge.\"*\n\nListen carefully. The keeper does not repeat herself."
+        }
+      ]
+    },
+    {
+      "slug": "quest-13",
+      "title": "The Second Sacred Rite",
+      "summary": "The trials grow more complex. Your progress is acknowledged, but greater challenges await.",
+      "icon": "🕯️",
+      "tags": [
+        "sacred-rites",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 12,
+        "questName": "The First Sacred Rite",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"You are well on your way. The next trials may prove to be more challenging in different ways.\"*\n\n> *\"Well, the first trial was fairly simple. It's what I do best.\"*\n\nConfidence carries you into the second rite — whether or not it should."
+        }
+      ]
+    },
+    {
+      "slug": "quest-14",
+      "title": "The Third Sacred Rite",
+      "summary": "The final rite demands everything. What comes after is not what you expected.",
+      "icon": "🕯️",
+      "tags": [
+        "sacred-rites",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 13,
+        "questName": "The Second Sacred Rite",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"I am proud of you. You have yet to take a bite from the forbidden fruit.\"*\n\n> *\"...yet?\"*\n\nThe keeper's words carry a warning. Completing the third rite opens a door you cannot close."
+        }
+      ]
+    },
+    {
+      "slug": "quest-15",
+      "title": "The Dark Path",
+      "summary": "The consequences of the sacred rites become real. This is where choices matter most.",
+      "icon": "🌑",
+      "tags": [
+        "sacred-rites",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 14,
+        "questName": "The Third Sacred Rite",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "What the keeper called the \"forbidden fruit\" is no longer a metaphor.\n\nThe dark path is not for everyone — but you're already on it."
+        }
+      ]
+    },
+    {
+      "slug": "quest-17",
+      "title": "Desperation",
+      "summary": "Someone is running out of time and you may be their last hope.",
+      "icon": "💊",
+      "tags": [
+        "mystery",
+        "quest"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Hm, what do you want? Didn't I already tell you I'm busy?\"*\n> *\"Isn't everyone on the planet dying, just at a different rate?\"*\n\n> *\"Please — you have to help me. I think I'm dying.\"*\n\nNot everyone will take you seriously. Find someone who will."
+        }
+      ]
+    },
+    {
+      "slug": "quest-18",
+      "title": "Moneybaggs",
+      "summary": "A rough journey leaves you worse for wear. Something broke — but what?",
+      "icon": "💰",
+      "tags": [
+        "mystery",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 17,
+        "questName": "Desperation",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"So... how was your journey? By the looks of you, not well.\"*\n\n> *\"All I know is when I went down there and talked to him he broke.\"*\n\nThe consequences of what happened are beginning to surface."
+        }
+      ]
+    },
+    {
+      "slug": "quest-19",
+      "title": "Prison Break",
+      "summary": "An unlikely proposition from a fellow prisoner — a plan to escape.",
+      "icon": "🔒",
+      "tags": [
+        "mystery",
+        "quest"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Psst, hey kid. Listen — I've got a way to bust us both out of this joint.\"*\n\n> *\"Uhh, what if I'd like to serve my time like a good citizen?\"*\n\nA classic jailbreak scenario. Cooperate — or don't."
+        }
+      ]
+    },
+    {
+      "slug": "quest-26",
+      "title": "Darkness in its Prime",
+      "summary": "Facing forces that will stop at nothing, you must weigh the cost of your convictions.",
+      "icon": "🌒",
+      "tags": [
+        "guild",
+        "main-story",
+        "quest"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"What's it gonna be, kid? Are you really going to risk your quest to save the...\"*\n\n> *\"Okay — but torturing for answers isn't right either.\"*\n\nThe stakes are rising, and so are the moral choices."
+        }
+      ]
+    },
+    {
+      "slug": "quest-27",
+      "title": "New Dawn",
+      "summary": "Rescued and regrouping aboard a strange ship, the path ahead starts to take shape.",
+      "icon": "🌅",
+      "tags": [
+        "guild",
+        "main-story",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 26,
+        "questName": "Darkness in its Prime",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Relax — you're safe now. You're on our ship. We rescued you and your friends from that...\"*\n\n> *\"What the—\"*\n\nA new chapter begins from an unexpected vantage point."
+        }
+      ]
+    },
+    {
+      "slug": "quest-29",
+      "title": "Brothers?",
+      "summary": "A guild with deep roots — and a nagging sense that you have been here before.",
+      "icon": "🏛️",
+      "tags": [
+        "guild",
+        "main-story",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 27,
+        "questName": "New Dawn",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"You've actually been here many times. This is your Adventurers Guild!\"*\n\n> *\"Wow — this place is incredible.\"*\n\nThe guild feels familiar in ways you can't quite explain. Something happened here, and the answers are close."
+        }
+      ]
+    },
+    {
+      "slug": "quest-33",
+      "title": "The Sewers",
+      "summary": "Pam and Prime have a monster problem beneath the city. Time to investigate.",
+      "icon": "🐀",
+      "tags": [
+        "guild",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 29,
+        "questName": "Brothers?",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Good afternoon. Yes — Prime mentioned you have a problem with monsters?\"*\n\nA straightforward task on the surface. Clear out whatever is lurking in the sewers — or try to."
+        }
+      ]
+    },
+    {
+      "slug": "quest-34",
+      "title": "Gathering",
+      "summary": "Regrouping and refocusing — the guild turns its attention back to the bigger picture.",
+      "icon": "📋",
+      "tags": [
+        "guild",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 29,
+        "questName": "Brothers?",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Indeed. I think it's high time we get back on target.\"*\n\n> *\"Well, the future certainly is interesting.\"*\n\nWith a clearer mission in mind, the guild readies itself for what comes next."
+        }
+      ]
+    },
+    {
+      "slug": "quest-38",
+      "title": "Dream?",
+      "summary": "A glimpse of something that should not exist — a new dimension, and Crowley wants answers.",
+      "icon": "✨",
+      "tags": [
+        "dream",
+        "realix",
+        "quest"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Crowley... I don't know how to explain what I just witnessed.\"*\n> *\"A new dimension you say? Do you think you might've discovered one of the Realix's domains?\"*\n\nWhat you experienced defies explanation. Crowley is intrigued — and alarmed."
+        }
+      ]
+    },
+    {
+      "slug": "quest-1000",
+      "title": "Just a Dream",
+      "summary": "Crowley is furious and skeptical. But what you saw was real.",
+      "icon": "💤",
+      "tags": [
+        "dream",
+        "realix",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 38,
+        "questName": "Dream?",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"This is bloody ridiculous. What kind of fool do you take me for?\"*\n> *\"Have you tried just getting a permit? How hard is it?\"*\n\nCrowley's anger may be covering for something else. The events you witnessed are more real than anyone wants to admit."
+        }
+      ]
+    },
+    {
+      "slug": "quest-1001",
+      "title": "Journey to Servitude",
+      "summary": "The end of a long road — but Barlion stands in the way.",
+      "icon": "🔮",
+      "tags": [
+        "dream",
+        "realix",
+        "quest"
+      ],
+      "requires": {
+        "type": "quest",
+        "questId": 1000,
+        "questName": "Just a Dream",
+        "status": "finished"
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "> *\"Crowley, we're almost done. Long story short — I have to become...\"*\n> *\"Oh don't you know? Barlion is working on something. You'll have to come back later.\"*\n\nThe finish line is in sight, but the path is never straightforward."
+        }
+      ]
+    },
+    {
+      "slug": "evil_containment_field",
+      "title": "Evil Containment Field",
+      "summary": "The Evil Containment Field is an ancient sealing technique invented by the heretics to keep corrupted magic under control in key areas.",
+      "icon": "https://minecraft.wiki/w/Respawn_Anchor#/media/File:Respawn_Anchor_Charges_4_JE1_BE1.gif",
+      "tags": [
+        "heretic",
+        "holy",
+        "utility"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "history",
+          "title": "History",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "The Evil Containment Field is a powerful ancient sealing technique created by the heretics long ago in an effort to protect their people from unholy magic.\n\nMost records describe it as both a defensive ritual and a purification tool. It was commonly built around watch posts, reliquaries, and temporary war camps where corruption's influence was strongest.\n\nThe original doctrine was simple: if corruption cannot be destroyed, it can be contained\n\nOlder heretic notes mention that these fields were used to prevent the watchful eye of the spectres. By nullifying their magic they became nothing more than beefier endermen. In some cases, they were also used as trial circles for suspected cultists and possessed warriors.\n\nEven now, the technique remains prevelant as no one can escape it's power...not even the creators of this land. Anyone standing inside the field will be nullified, including the one who built it."
+        },
+        {
+          "id": "mechanics",
+          "title": "Mechanics",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "### How to create one\n\nBuild a square with **4 Respawn Anchors** at the corners.\n\n- The square must be between **8x8 and 11x11**.\n- All anchors must be on the same Y level.\n- The field only functions while at least one total charge exists across the 4 anchors.\n\n### What it does\n\nIf a player is inside the active field range:\n\n- Spell casts are cancelled.\n- Teleports are cancelled and the player is pulled back.\n- Commands are blocked.\n- If lethal damage would kill the player, the field can nullify that death event.\n\nEach successful nullification consumes charge from the anchors.\n\n### Practical notes\n\n- Keep spare glowstone ready. A drained field is just a square.\n- Larger squares give better movement room but are easier to breach physically.\n- Smaller squares are better for holding a single target or controlling choke points.\n- If anchors are broken or moved, field integrity can fail immediately.\n\n### Recommended setup\n\nFor a reliable containment site:\n\n1. Mark your corner coordinates first.\n2. Place all 4 anchors at matching height.\n3. Charge all anchors before engaging the target.\n4. Keep one runner outside with extra glowstone."
+        },
+        {
+          "id": "applications",
+          "title": "Potential Applications",
+          "requires": {
+            "type": "quest",
+            "questId": 0,
+            "questName": "A Mysterious New Friend",
+            "status": "finished"
+          },
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Legends say the heretics would form a square, then stack that square upward toward the sky to ensure purity at all angles.\n\nAccording to these accounts, this was done to stop the Spectres of Chaos from observing them through distant sight or magical surveillance.\n\nIf the legends are true, the Evil Containment Field was used for more than local control. It was used to create blind zones where chaos entities could not cast, track, or watch.\n\nPossible modern uses:\n\n- Sealing a ritual site before a major boss encounter.\n- Blocking teleport escapes during PvP\n- Creating protected zones for farms\n- Building layered perimeter rings around high-value structures.\n\nSome scholars argue the stacked-field method may be the reason certain ruined towers still show strange anti-magic behavior today."
+        }
+      ]
+    },
+    {
+      "slug": "crowley",
+      "title": "Crowley",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "all": [
+          {
+            "type": "quest",
+            "questId": 0,
+            "questName": "A Mysterious New Friend",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "flames",
+      "title": "Flames",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "any": [
+          {
+            "type": "quest",
+            "questId": 1,
+            "questName": "Find an Old Friend",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "rogue_crash",
+      "title": "Rogue Crash",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "any": [
+          {
+            "type": "quest",
+            "questId": 1,
+            "questName": "Find an Old Friend",
+            "status": "started"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "corrupt_crash",
+      "title": "Corrupt Crash",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "all": [
+          {
+            "type": "quest",
+            "questId": 1,
+            "questName": "Find an Old Friend",
+            "status": "in_progress"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "mjfaithyuan",
+      "title": "mjfaithyuan",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "any": [
+          {
+            "type": "quest",
+            "questId": 2,
+            "questName": "Explore the Ruins",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "bat_tiger",
+      "title": "BatTiger",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "all": [
+          {
+            "type": "quest",
+            "questId": 2,
+            "questName": "Explore the Ruins",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "crashcringle",
+      "title": "Crash Cringle",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "all": [
+          {
+            "type": "quest",
+            "questId": 0,
+            "questName": "A Mysterious New Friend",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "ashton",
+      "title": "Ashton",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": {
+        "any": [
+          {
+            "type": "quest",
+            "questId": 8,
+            "questName": "The Lost Valley",
+            "status": "finished"
+          }
+        ]
+      },
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "luckie",
+      "title": "Luckie",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "luckie01",
+      "title": "Luckie01",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    },
+    {
+      "slug": "asuna",
+      "title": "Asuna",
+      "summary": "Short summary.",
+      "icon": "",
+      "tags": [
+        "character"
+      ],
+      "requires": null,
+      "bosses": [],
+      "items": [],
+      "sections": [
+        {
+          "id": "overview",
+          "title": "Overview",
+          "requires": null,
+          "bossId": "",
+          "itemId": "",
+          "contentMarkdown": "Write the details here."
+        }
+      ]
+    }
+  ]
+}

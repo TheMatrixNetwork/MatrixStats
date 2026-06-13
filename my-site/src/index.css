@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --wiki-bg: url("./assets/wiki-bg.png");
+  --ink: #f1f5f9;
+  --mist: #0b1324;
+  --glow: #38bdf8;
+  --ember: #e2e8f0;
+  --moss: #60a5fa;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(1100px 650px at 15% -10%, #0f2138 0%, transparent 65%),
+    radial-gradient(900px 520px at 85% -20%, #15243b 0%, transparent 60%),
+    linear-gradient(160deg, #070b14 0%, #0b1324 55%, #070b14 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wiki-shell {
+  position: relative;
+  background-color: #0b1324;
+  background-image: var(--wiki-bg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.wiki-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 480px at 15% 0%, rgba(14, 23, 40, 0.7) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(7, 10, 16, 0.88) 0%, rgba(7, 10, 16, 0.96) 100%);
+}
+
+.wiki-content {
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Cinzel", "Space Grotesk", serif;
+  letter-spacing: 0.02em;
+}
+
+.grain-bg {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
+.bg-white\/80 {
+  background-color: rgba(15, 23, 42, 0.22);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.bg-white\/70 {
+  background-color: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.bg-white {
+  background-color: #0f172a;
+}
+
+.text-slate-900 {
+  color: #e2e8f0;
+}
+
+.text-slate-700 {
+  color: #cbd5f5;
+}
+
+.text-slate-600 {
+  color: #94a3b8;
+}
+
+.text-slate-500 {
+  color: #94a3b8;
+}
+
+.text-slate-400 {
+  color: #94a3b8;
+}
+
+.border-slate-200 {
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+.border-slate-300 {
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.bg-amber-50 {
+  background-color: rgba(125, 211, 252, 0.12);
+}
+
+.bg-amber-100 {
+  background-color: rgba(125, 211, 252, 0.18);
+}
+
+.text-amber-800 {
+  color: #bae6fd;
+}
+
+
+
+
+
+.glow-ring {
+  box-shadow: 0 0 0 1px rgba(125, 211, 252, 0.45), 0 12px 44px rgba(14, 21, 40, 0.45);
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 8px rgba(248, 250, 252, 0.12);
+}
+
+.shadow {
+  box-shadow: 0 8px 24px rgba(248, 250, 252, 0.14);
+}
+
+.shadow-lg {
+  box-shadow: 0 16px 40px rgba(248, 250, 252, 0.16);
+}
+
+.glow-ring {
+  box-shadow: 0 0 0 1px rgba(186, 230, 253, 0.55), 0 12px 44px rgba(248, 250, 252, 0.12);
+}
+
+@keyframes float-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: float-in 0.8s ease both;
+}
+
+.tatter-text {
+  color: rgba(148, 163, 184, 0.8);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(125, 211, 252, 0.2);
+  filter: blur(0.4px);
+}
+
+.tatter-block {
+  padding: 0.75rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.12), rgba(15, 23, 42, 0.15));
+  border: 1px dashed rgba(148, 163, 184, 0.25);
+}
+
+.tatter-icon {
+  font-family: "Cinzel", "Space Grotesk", serif;
+  font-weight: 700;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.section-divider {
+  margin: 0 0 24px;
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.contents-icon {
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(148, 163, 184, 0.9) 0 2px,
+    transparent 2px 4px,
+    rgba(148, 163, 184, 0.9) 4px 6px,
+    transparent 6px 8px,
+    rgba(148, 163, 184, 0.9) 8px 10px
+  );
+}
+
+.contents-number {
+  width: 1.1rem;
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.rounded-3xl {
+  border-radius: 0.75rem;
+}
+
+.rounded-2xl {
+  border-radius: 0.5rem;
+}
+
+.rounded-xl {
+  border-radius: 0.375rem;
+}
+
+.rounded-\[32px\] {
+  border-radius: 16px;
+}

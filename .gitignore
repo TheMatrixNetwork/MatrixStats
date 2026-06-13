@@ -1,16 +1,25 @@
-# Compiled class file
-*.class
-
-# Log file
+# ---------- Node / frontend ----------
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
 *.log
 
-# BlueJ files
-*.ctxt
+# Local environment files (keep secrets out of git)
+.env
+*.env
+my-site.env
+!*.env.example
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# ---------- Java / Maven (slim AuthMe plugin) ----------
+target/
+*.class
 *.jar
 *.war
 *.nar
@@ -18,22 +27,28 @@
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+dependency-reduced-pom.xml
+.mtj.tmp/
+*.ctxt
 
-# Eclipse
-.classpath
-.project
-.settings/
- 
-# Intellij
+# ---------- Editors / OS ----------
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.iml
 *.iws
- 
-# Mac
+.classpath
+.project
+.settings/
 .DS_Store
- 
-# Maven
-log/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ---------- Project-specific carry-overs ----------
+SkillsPro/
+BeautyQuests/
+*.sqlite

@@ -1,0 +1,11 @@
+MatrixSite backend deployment checklist
+
+1. Copy the backend app files to /srv/mysite-backend on the Linux server.
+2. Copy my-site.env.example to my-site.env and replace the placeholder values.
+3. Confirm MariaDB is running locally on the Linux machine.
+4. Confirm the database name and credentials match the values in my-site.env.
+5. Make start.sh executable: chmod +x start.sh.
+6. Enable the systemd service from systemd/mysite-backend.service.
+7. If using nginx, update nginx/backend.conf.example and add it to your site config.
+8. Build the frontend separately and point it at the backend using VITE_API_BASE.
+9. Restart the backend service after any env changes.
