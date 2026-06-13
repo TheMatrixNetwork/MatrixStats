@@ -1,176 +1,166 @@
 package org.matrixnetwork.stats;
 
-import com.gmail.nossr50.datatypes.player.PlayerProfile;
-import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
-import com.magmaguy.elitemobs.playerdata.ElitePlayerInventory;
-import com.sun.net.httpserver.HttpServer;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import net.milkbowl.vault.economy.Economy;
-import net.skinsrestorer.api.SkinsRestorerAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.annotation.dependency.Dependency;
-import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
-import org.bukkit.plugin.java.annotation.plugin.ApiVersion.Target;
-import org.bukkit.plugin.java.annotation.plugin.Description;
-import org.bukkit.plugin.java.annotation.plugin.Plugin;
-import org.bukkit.plugin.java.annotation.plugin.author.Author;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.matrixnetwork.stats.handler.StatsHandler;
-import org.matrixnetwork.stats.rest.AuthResource;
-import org.matrixnetwork.stats.rest.SkinResource;
-import org.matrixnetwork.stats.rest.StatsResource;
-import org.matrixnetwork.stats.rest.filter.CorsFilter;
+import org.matrixnetwork.stats.auth.AuthShimServer;
+import org.matrixnetwork.stats.auth.KeystoreHelper;
+import org.matrixnetwork.stats.auth.SecretHelper;
 
-import java.net.URI;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
 
-import static com.magmaguy.elitemobs.adventurersguild.GuildRank.getActiveGuildRank;
-import static com.magmaguy.elitemobs.adventurersguild.GuildRank.getGuildPrestigeRank;
+public class MatrixStats extends JavaPlugin {
 
-@Plugin(name = "MatrixStats", version = "1.0.0")
-@Description(value = "This Plugin handles the stats system on Matrix")
-@Author(value = "S1mple133")
-@ApiVersion(Target.v1_13)
-@Dependency(value = "SkinsRestorer")
-@Dependency(value = "Vault")
-@Dependency(value = "Magic")
-@Dependency(value = "EliteMobs")
-@Dependency(value = "Slimefun")
-@Dependency(value = "ProjectKorra")
-@Dependency(value = "mcMMO")
+    private AuthShimServer authShimServer;
 
-public class MatrixStats extends JavaPlugin{
-	
-	private static MatrixStats plugin;
-	private static SkinsRestorerAPI skinsRestorerAPI;
-	private HttpServer server;
-	private static Economy econ;
+    @Override
+    public void onEnable() {
+        saveDefaultConfig();
 
-	public static Economy getEcon() {
-		return econ;
-	}
+        if (getServer().getPluginManager().getPlugin("AuthMe") == null) {
+            getLogger().severe("AuthMe plugin not found. MatrixStats requires AuthMe to be installed.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
-	public static SkinsRestorerAPI getSkinsRestorerAPI() {
-		return skinsRestorerAPI;
-	}
+        try {
+            startAuthShim();
+        } catch (Exception ex) {
+            getLogger().log(Level.SEVERE, "Failed to start auth shim, disabling plugin", ex);
+            getServer().getPluginManager().disablePlugin(this);
+        }
+    }
 
-	@Override
-	public void onLoad() {
-		plugin = this;
-	}
-	
-	@Override
-	public void onEnable() {
-		if (!setupEconomy() ) {
-			getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!",
-					getDescription().getName()));
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
+    @Override
+    public void onDisable() {
+        if (authShimServer != null) {
+            authShimServer.stop();
+            authShimServer = null;
+        }
+    }
 
-		BukkitTask r = new BukkitRunnable() {
-			@Override
-			public void run() {
-				skinsRestorerAPI = SkinsRestorerAPI.getApi();
-			}
-		}.runTask(this);
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!command.getName().equalsIgnoreCase("matrixstats")) {
+            return false;
+        }
+        if (!sender.hasPermission("matrixstats.admin")) {
+            sender.sendMessage("§cNo permission.");
+            return true;
+        }
+        if (args.length == 0) {
+            sender.sendMessage("§eUsage: /matrixstats reload | regen-secret | regen-cert");
+            return true;
+        }
+        switch (args[0].toLowerCase()) {
+            case "reload":
+                reloadConfig();
+                restartAuthShim(sender);
+                return true;
+            case "regen-secret":
+                getConfig().set("auth-shim.shared-secret", "");
+                saveConfig();
+                restartAuthShim(sender);
+                sender.sendMessage("§aShared secret regenerated. Check console for the new value.");
+                return true;
+            case "regen-cert":
+                File dataFolder = getDataFolder();
+                FileConfiguration cfg = getConfig();
+                File ks = new File(dataFolder, cfg.getString("auth-shim.keystore-file", "auth-shim-keystore.p12"));
+                File cert = new File(dataFolder, cfg.getString("auth-shim.cert-export-file", "auth-shim-cert.pem"));
+                if (ks.exists() && !ks.delete()) {
+                    sender.sendMessage("§cCould not delete keystore: " + ks.getAbsolutePath());
+                    return true;
+                }
+                if (cert.exists() && !cert.delete()) {
+                    sender.sendMessage("§cCould not delete cert: " + cert.getAbsolutePath());
+                    return true;
+                }
+                cfg.set("auth-shim.keystore-password", "");
+                saveConfig();
+                restartAuthShim(sender);
+                sender.sendMessage("§aCertificate regenerated.");
+                return true;
+            default:
+                sender.sendMessage("§eUsage: /matrixstats reload | regen-secret | regen-cert");
+                return true;
+        }
+    }
 
-		StatsHandler.init();
+    private void restartAuthShim(CommandSender sender) {
+        if (authShimServer != null) {
+            authShimServer.stop();
+            authShimServer = null;
+        }
+        try {
+            startAuthShim();
+            sender.sendMessage("§aAuth shim restarted.");
+        } catch (Exception ex) {
+            getLogger().log(Level.SEVERE, "Failed to restart auth shim", ex);
+            sender.sendMessage("§cAuth shim failed to restart: " + ex.getMessage());
+        }
+    }
 
-		ResourceConfig rc = new ResourceConfig();
-		rc.packages("org.matrixnetwork.stats.rest");
-		rc.register(StatsResource.class);
-		rc.register(SkinResource.class);
-		rc.register(AuthResource.class);
-		rc.register(CorsFilter.class);
+    private void startAuthShim() throws IOException, GeneralExceptionWrapper {
+        FileConfiguration cfg = getConfig();
+        if (!cfg.getBoolean("auth-shim.enabled", true)) {
+            getLogger().info("Auth shim disabled by config (auth-shim.enabled=false). Skipping.");
+            return;
+        }
 
-		server = JdkHttpServerFactory.createHttpServer(
-				URI.create( "http://localhost:8081/api" ), rc );
+        File dataFolder = getDataFolder();
+        if (!dataFolder.exists() && !dataFolder.mkdirs()) {
+            throw new IOException("Could not create data folder: " + dataFolder.getAbsolutePath());
+        }
 
-		getLogger().info("Listening on http://localhost:8081/api !");
-	}
+        String secret = cfg.getString("auth-shim.shared-secret", "");
+        if (secret == null || secret.isBlank()) {
+            secret = SecretHelper.generate(48);
+            cfg.set("auth-shim.shared-secret", secret);
+            saveConfig();
+            getLogger().info("Generated new shared secret for auth shim (saved to config.yml).");
+        }
 
-	private boolean setupEconomy() {
-		if (getServer().getPluginManager().getPlugin("Vault") == null) {
-			return false;
-		}
+        String ksPassword = cfg.getString("auth-shim.keystore-password", "");
+        if (ksPassword == null || ksPassword.isBlank()) {
+            ksPassword = SecretHelper.generate(32);
+            cfg.set("auth-shim.keystore-password", ksPassword);
+            saveConfig();
+        }
 
-		RegisteredServiceProvider<Economy> rsp = getServer()
-				.getServicesManager()
-				.getRegistration(Economy.class);
+        File keystoreFile = new File(dataFolder, cfg.getString("auth-shim.keystore-file", "auth-shim-keystore.p12"));
+        File certFile = new File(dataFolder, cfg.getString("auth-shim.cert-export-file", "auth-shim-cert.pem"));
+        String commonName = cfg.getString("auth-shim.cert-common-name", "localhost");
+        int validityDays = cfg.getInt("auth-shim.cert-validity-days", 3650);
 
-		if (rsp == null) {
-			return false;
-		}
-		econ = rsp.getProvider();
-		return econ != null;
-	}
+        try {
+            KeystoreHelper.ensureKeystore(keystoreFile, ksPassword, commonName, validityDays, getLogger());
+            KeystoreHelper.exportCertificate(keystoreFile, ksPassword, certFile, getLogger());
+        } catch (Exception ex) {
+            throw new GeneralExceptionWrapper("Failed to prepare TLS keystore: " + ex.getMessage(), ex);
+        }
 
-	@Override
-	public void onDisable() {
-		if(server != null)
-			server.stop( 0 );
-		getLogger().info("Disabled");
-	}
-	
-	public static org.bukkit.plugin.Plugin getPlugin() {
-		return plugin;
-	}
+        String bindAddress = cfg.getString("auth-shim.bind-address", "127.0.0.1");
+        int port = cfg.getInt("auth-shim.port", 8081);
+        long timeoutMs = cfg.getLong("auth-shim.authme-call-timeout-ms", 5000L);
 
-//	private int getLevel(PlayerProfile mcMMOProfile, PrimarySkillType skillType) {
-//		int skillLevel = mcMMOProfile.getSkillLevel(skillType);
-//		return Math.min(skillLevel, MAX_LEVEL);
-//	}
+        try {
+            authShimServer = new AuthShimServer(this, bindAddress, port, keystoreFile, ksPassword, secret, timeoutMs);
+            authShimServer.start();
+        } catch (Exception ex) {
+            throw new GeneralExceptionWrapper("Failed to start HTTPS server: " + ex.getMessage(), ex);
+        }
 
-	public static int getGuildRank(String playerName) {
-		Player player = Bukkit.getPlayer(playerName);
-		if (player == null) {
-			return 0;
-		} else {
-			// Get the player's guild level from elite mobs
-			return getActiveGuildRank(player, true);
-		}
-	}
+        getLogger().info("Auth shim listening on https://" + bindAddress + ":" + port + "/");
+        getLogger().info("Node backend should set AUTHME_SHIM_CA_PATH to: " + certFile.getAbsolutePath());
+    }
 
-	public static int getElitePrestige(String playerName) {
-		Player player = Bukkit.getPlayer(playerName);
-		if (player == null) {
-			return 0;
-		} else {
-			// Get the player's elite prestige from elite mobs
-			return getGuildPrestigeRank(player, true);
-		}
-	}
-
-	public static int getThreatTier(String playerName) {
-		Player player = Bukkit.getPlayer(playerName);
-		if (player == null) {
-			return 0;
-		} else {
-			return ElitePlayerInventory.playerInventories.get(player.getUniqueId()).getFullPlayerTier(true);
-		}
-	}
-
-	public static int getSlimefunLevel(String playerName) {
-		Player player = Bukkit.getPlayer(playerName);
-		if (player == null) {
-			return 0;
-		} else {
-			try {
-				io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile slimefunProfile = Slimefun.getRegistry().getPlayerProfiles().get(player.getUniqueId());
-				List<String> titles = Slimefun.getRegistry().getResearchRanks();
-				float fraction = (float) slimefunProfile.getResearches().size() / Slimefun.getRegistry().getResearches().size();
-				return (int) (fraction * (titles.size() - 1));
-			} catch(NullPointerException e){
-				return 0;
-			}
-
-		}
-	}
+    public static class GeneralExceptionWrapper extends RuntimeException {
+        public GeneralExceptionWrapper(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 }

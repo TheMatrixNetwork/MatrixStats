@@ -1,0 +1,18 @@
+name: MatrixStats
+version: ${project.version}
+main: org.matrixnetwork.stats.MatrixStats
+api-version: '1.13'
+author: S1mple133
+description: AuthMe shim exposing HTTPS endpoints for the MatrixSite Node backend
+depend: [AuthMe]
+
+commands:
+  matrixstats:
+    description: MatrixStats admin commands
+    usage: /<command> reload | regen-secret | regen-cert
+    permission: matrixstats.admin
+
+permissions:
+  matrixstats.admin:
+    description: Manage the MatrixStats auth shim
+    default: op

@@ -1,0 +1,33 @@
+# MatrixStats auth shim configuration.
+#
+# This plugin exposes an HTTPS API that the MatrixSite Node backend calls to
+# verify and change AuthMe passwords. It is meant to bind to loopback only
+# and is protected by a shared secret header (X-Auth-Shim-Secret).
+#
+# Anything left blank below will be auto-generated on first start and written
+# back into this file. The generated TLS keystore and exported certificate
+# live in the plugin data folder (plugins/MatrixStats/).
+
+auth-shim:
+  enabled: true
+
+  # Address to bind the HTTPS listener to. 127.0.0.1 is strongly recommended;
+  # the Node backend should be running on the same host.
+  bind-address: 127.0.0.1
+  port: 8081
+
+  # Shared secret that the Node backend must send in the X-Auth-Shim-Secret
+  # header on every request. Leave blank to auto-generate on first start.
+  shared-secret: ""
+
+  # Self-signed TLS material. The keystore is a PKCS12 file. The exported
+  # certificate (PEM) is what the Node backend should trust (AUTHME_SHIM_CA_PATH).
+  keystore-file: auth-shim-keystore.p12
+  keystore-password: ""
+  cert-export-file: auth-shim-cert.pem
+  cert-validity-days: 3650
+  cert-common-name: localhost
+
+  # How long an AuthMe API call is allowed to take before we 504 the request,
+  # in milliseconds.
+  authme-call-timeout-ms: 5000
