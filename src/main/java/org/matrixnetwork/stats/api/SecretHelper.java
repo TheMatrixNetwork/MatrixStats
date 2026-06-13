@@ -1,4 +1,4 @@
-package org.matrixnetwork.stats.auth;
+package org.matrixnetwork.stats.api;
 
 import java.security.SecureRandom;
 import java.util.Base64;

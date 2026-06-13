@@ -1,4 +1,4 @@
-package org.matrixnetwork.stats.auth;
+package org.matrixnetwork.stats.api;
 
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,28 +15,30 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public final class AuthShimServer {
+/**
+ * Owns the HTTPS server and routes requests to the AuthMe, Skin, and Stats
+ * handlers. Every endpoint requires the {@code X-Matrix-Api-Secret} header.
+ */
+public final class ApiServer {
 
     private final JavaPlugin plugin;
     private final String bindAddress;
     private final int port;
-    private final java.io.File keystoreFile;
+    private final File keystoreFile;
     private final String keystorePassword;
-    private final String sharedSecret;
-    private final long authmeCallTimeoutMs;
+    private final ApiSupport support;
 
     private HttpsServer server;
 
-    public AuthShimServer(JavaPlugin plugin, String bindAddress, int port,
-                          java.io.File keystoreFile, String keystorePassword,
-                          String sharedSecret, long authmeCallTimeoutMs) {
+    public ApiServer(JavaPlugin plugin, String bindAddress, int port,
+            File keystoreFile, String keystorePassword,
+            String sharedSecret, long mainThreadTimeoutMs) {
         this.plugin = plugin;
         this.bindAddress = bindAddress;
         this.port = port;
         this.keystoreFile = keystoreFile;
         this.keystorePassword = keystorePassword;
-        this.sharedSecret = sharedSecret;
-        this.authmeCallTimeoutMs = authmeCallTimeoutMs;
+        this.support = new ApiSupport(plugin, sharedSecret, mainThreadTimeoutMs);
     }
 
     public void start() throws Exception {
@@ -44,12 +47,17 @@ public final class AuthShimServer {
         server = HttpsServer.create(new InetSocketAddress(bindAddress, port), 0);
         server.setHttpsConfigurator(new HttpsConfigurator(sslContext));
 
-        AuthHandler handler = new AuthHandler(plugin, sharedSecret, authmeCallTimeoutMs);
-        server.createContext("/health", handler.health());
-        server.createContext("/verify", handler.verify());
-        server.createContext("/change-password", handler.changePassword());
+        AuthHandler authHandler = new AuthHandler(plugin, support);
+        SkinHandler skinHandler = new SkinHandler(plugin, support);
+        StatsHandler statsHandler = new StatsHandler(plugin, support);
 
-        server.setExecutor(Executors.newFixedThreadPool(4, namedDaemonThreads("matrixstats-shim")));
+        server.createContext("/health", authHandler.health());
+        server.createContext("/verify", authHandler.verify());
+        server.createContext("/change-password", authHandler.changePassword());
+        server.createContext("/skin/", skinHandler.skin());
+        server.createContext("/stats/", statsHandler.stats());
+
+        server.setExecutor(Executors.newFixedThreadPool(4, namedDaemonThreads("matrixstats-api")));
         server.start();
     }
 

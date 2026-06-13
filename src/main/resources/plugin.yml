@@ -2,9 +2,12 @@ name: MatrixStats
 version: ${project.version}
 main: org.matrixnetwork.stats.MatrixStats
 api-version: '1.21'
-author: S1mple133
-description: AuthMe shim exposing HTTPS endpoints for the MatrixSite Node backend
+authors: [S1mple133, CrashCringle]
+description: Local HTTPS API exposing AuthMe, SkinsRestorer, and live player stats
 depend: [AuthMe]
+# ProjectKorra omitted from softdepend until the integration is re-enabled
+# (see commented block in StatsHandler / pom.xml).
+softdepend: [Vault, SkinsRestorer, Slimefun, mcMMO]
 
 commands:
   matrixstats:
@@ -14,5 +17,5 @@ commands:
 
 permissions:
   matrixstats.admin:
-    description: Manage the MatrixStats auth shim
+    description: Manage the MatrixStats API
     default: op

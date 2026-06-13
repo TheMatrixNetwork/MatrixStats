@@ -1,84 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.matrixnetwork</groupId>
-	<artifactId>MatrixStats</artifactId>
+<groupId>org.matrixnetwork</groupId>
+<artifactId>MatrixStats</artifactId>
 <version>2.0.0</version>
-	<packaging>jar</packaging>
+<packaging>jar</packaging>
 
-<name>MatrixStats AuthMe Shim</name>
+<name>MatrixStats</name>
 <description>
-		Slim Bukkit plugin that exposes HTTPS endpoints (verify-password, change-password)
-		backed by the AuthMe Java API, so the MatrixSite Node backend can delegate auth
-		without needing to re-implement AuthMe's hashing scheme.
+Bukkit plugin that exposes a small HTTPS API on loopback for AuthMe
+        verify / change-password, SkinsRestorer skin lookup, and live player
+        stats (vanilla + Vault + Slimefun + mcMMO).
 </description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<maven.compiler.source>21</maven.compiler.source>
-<maven.compiler.target>21</maven.compiler.target>
-	</properties>
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+</properties>
 
-	<repositories>
-<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-		<repository>
-<id>codemc-repo</id>
-<url>https://repo.codemc.org/repository/maven-public/</url>
-		</repository>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
+<repositories>
+    <repository>
+        <id>spigot-repo</id>
+        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+        <id>codemc-repo</id>
+        <url>https://repo.codemc.org/repository/maven-public/</url>
+    </repository>
+    <repository>
+<id>codemc-snapshots</id>
+<url>https://repo.codemc.org/repository/maven-snapshots/</url>
 </repository>
-	</repositories>
+<repository>
+<id>jitpack.io</id>
+<url>https://jitpack.io</url>
+</repository>
+</repositories>
 
-	<dependencies>
+<dependencies>
+    <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-api</artifactId>
+        <version>1.21.11-R0.1-SNAPSHOT</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>fr.xephi</groupId>
+        <artifactId>authme</artifactId>
+        <version>5.6.0-SNAPSHOT</version>
+        <scope>provided</scope>
+    </dependency>
 <dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-<version>1.21.11-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-<groupId>fr.xephi</groupId>
-<artifactId>authme</artifactId>
-<version>5.6.0-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.10.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
-			<scope>test</scope>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+    <scope>provided</scope>
 </dependency>
-	</dependencies>
+<dependency>
+    <groupId>net.skinsrestorer</groupId>
+    <artifactId>skinsrestorer-api</artifactId>
+    <version>14.2.10</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>com.github.MilkBowl</groupId>
+    <artifactId>VaultAPI</artifactId>
+    <version>1.7</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>com.github.Slimefun</groupId>
+    <artifactId>Slimefun4</artifactId>
+    <version>RC-37</version>
+    <scope>provided</scope>
+    <exclusions>
+        <exclusion>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-api</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>com.gmail.nossr50.mcMMO</groupId>
+    <artifactId>mcMMO</artifactId>
+    <version>2.1.219-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
+<!--
+        TODO: ProjectKorra integration is disabled until we have a stable
+        artifact source. repo.projectkorra.com was unreachable at last check
+        and jitpack does not host this artifact. When restored, also uncomment
+        the projectkorra block in StatsHandler and add ProjectKorra back to
+        plugin.yml softdepend.
 
-	<build>
-<finalName>${project.artifactId}-${project.version}</finalName>
-		<resources>
-			<resource>
-<directory>src/main/resources</directory>
-<filtering>true</filtering>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-<version>3.13.0</version>
-				<configuration>
-<source>21</source>
-<target>21</target>
-</configuration>
-			</plugin>
-		</plugins>
+        <dependency>
+            <groupId>com.projectkorra</groupId>
+            <artifactId>projectkorra</artifactId>
+            <version>1.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13.2</version>
+    <scope>test</scope>
+</dependency>
+</dependencies>
+
+<build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
+    <plugins>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
+            <configuration>
+                <source>21</source>
+                <target>21</target>
+            </configuration>
+        </plugin>
+    </plugins>
 </build>
 </project>

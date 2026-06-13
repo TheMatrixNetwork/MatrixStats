@@ -4,9 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.matrixnetwork.stats.auth.AuthShimServer;
-import org.matrixnetwork.stats.auth.KeystoreHelper;
-import org.matrixnetwork.stats.auth.SecretHelper;
+import org.matrixnetwork.stats.api.ApiServer;
+import org.matrixnetwork.stats.api.KeystoreHelper;
+import org.matrixnetwork.stats.api.SecretHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.logging.Level;
 
 public class MatrixStats extends JavaPlugin {
 
-    private AuthShimServer authShimServer;
+    private ApiServer apiServer;
 
     @Override
     public void onEnable() {
@@ -27,18 +27,18 @@ public class MatrixStats extends JavaPlugin {
         }
 
         try {
-            startAuthShim();
+            startApi();
         } catch (Exception ex) {
-            getLogger().log(Level.SEVERE, "Failed to start auth shim, disabling plugin", ex);
+            getLogger().log(Level.SEVERE, "Failed to start MatrixStats API, disabling plugin", ex);
             getServer().getPluginManager().disablePlugin(this);
         }
     }
 
     @Override
     public void onDisable() {
-        if (authShimServer != null) {
-            authShimServer.stop();
-            authShimServer = null;
+        if (apiServer != null) {
+            apiServer.stop();
+            apiServer = null;
         }
     }
 
@@ -58,19 +58,19 @@ public class MatrixStats extends JavaPlugin {
         switch (args[0].toLowerCase()) {
             case "reload":
                 reloadConfig();
-                restartAuthShim(sender);
+                restartApi(sender);
                 return true;
             case "regen-secret":
-                getConfig().set("auth-shim.shared-secret", "");
+                getConfig().set("api.shared-secret", "");
                 saveConfig();
-                restartAuthShim(sender);
+                restartApi(sender);
                 sender.sendMessage("§aShared secret regenerated. Check console for the new value.");
                 return true;
             case "regen-cert":
                 File dataFolder = getDataFolder();
                 FileConfiguration cfg = getConfig();
-                File ks = new File(dataFolder, cfg.getString("auth-shim.keystore-file", "auth-shim-keystore.p12"));
-                File cert = new File(dataFolder, cfg.getString("auth-shim.cert-export-file", "auth-shim-cert.pem"));
+                File ks = new File(dataFolder, cfg.getString("api.keystore-file", "api-keystore.p12"));
+                File cert = new File(dataFolder, cfg.getString("api.cert-export-file", "api-cert.pem"));
                 if (ks.exists() && !ks.delete()) {
                     sender.sendMessage("§cCould not delete keystore: " + ks.getAbsolutePath());
                     return true;
@@ -79,9 +79,9 @@ public class MatrixStats extends JavaPlugin {
                     sender.sendMessage("§cCould not delete cert: " + cert.getAbsolutePath());
                     return true;
                 }
-                cfg.set("auth-shim.keystore-password", "");
+                cfg.set("api.keystore-password", "");
                 saveConfig();
-                restartAuthShim(sender);
+                restartApi(sender);
                 sender.sendMessage("§aCertificate regenerated.");
                 return true;
             default:
@@ -90,24 +90,24 @@ public class MatrixStats extends JavaPlugin {
         }
     }
 
-    private void restartAuthShim(CommandSender sender) {
-        if (authShimServer != null) {
-            authShimServer.stop();
-            authShimServer = null;
+    private void restartApi(CommandSender sender) {
+        if (apiServer != null) {
+            apiServer.stop();
+            apiServer = null;
         }
         try {
-            startAuthShim();
-            sender.sendMessage("§aAuth shim restarted.");
+            startApi();
+            sender.sendMessage("§aMatrixStats API restarted.");
         } catch (Exception ex) {
-            getLogger().log(Level.SEVERE, "Failed to restart auth shim", ex);
-            sender.sendMessage("§cAuth shim failed to restart: " + ex.getMessage());
+            getLogger().log(Level.SEVERE, "Failed to restart MatrixStats API", ex);
+            sender.sendMessage("§cMatrixStats API failed to restart: " + ex.getMessage());
         }
     }
 
-    private void startAuthShim() throws IOException, GeneralExceptionWrapper {
+    private void startApi() throws IOException, GeneralExceptionWrapper {
         FileConfiguration cfg = getConfig();
-        if (!cfg.getBoolean("auth-shim.enabled", true)) {
-            getLogger().info("Auth shim disabled by config (auth-shim.enabled=false). Skipping.");
+        if (!cfg.getBoolean("api.enabled", true)) {
+            getLogger().info("API disabled by config (api.enabled=false). Skipping.");
             return;
         }
 
@@ -116,25 +116,25 @@ public class MatrixStats extends JavaPlugin {
             throw new IOException("Could not create data folder: " + dataFolder.getAbsolutePath());
         }
 
-        String secret = cfg.getString("auth-shim.shared-secret", "");
+        String secret = cfg.getString("api.shared-secret", "");
         if (secret == null || secret.isBlank()) {
             secret = SecretHelper.generate(48);
-            cfg.set("auth-shim.shared-secret", secret);
+            cfg.set("api.shared-secret", secret);
             saveConfig();
-            getLogger().info("Generated new shared secret for auth shim (saved to config.yml).");
+            getLogger().info("Generated new shared secret for MatrixStats API (saved to config.yml).");
         }
 
-        String ksPassword = cfg.getString("auth-shim.keystore-password", "");
+        String ksPassword = cfg.getString("api.keystore-password", "");
         if (ksPassword == null || ksPassword.isBlank()) {
             ksPassword = SecretHelper.generate(32);
-            cfg.set("auth-shim.keystore-password", ksPassword);
+            cfg.set("api.keystore-password", ksPassword);
             saveConfig();
         }
 
-        File keystoreFile = new File(dataFolder, cfg.getString("auth-shim.keystore-file", "auth-shim-keystore.p12"));
-        File certFile = new File(dataFolder, cfg.getString("auth-shim.cert-export-file", "auth-shim-cert.pem"));
-        String commonName = cfg.getString("auth-shim.cert-common-name", "localhost");
-        int validityDays = cfg.getInt("auth-shim.cert-validity-days", 3650);
+        File keystoreFile = new File(dataFolder, cfg.getString("api.keystore-file", "api-keystore.p12"));
+        File certFile = new File(dataFolder, cfg.getString("api.cert-export-file", "api-cert.pem"));
+        String commonName = cfg.getString("api.cert-common-name", "localhost");
+        int validityDays = cfg.getInt("api.cert-validity-days", 3650);
 
         try {
             KeystoreHelper.ensureKeystore(keystoreFile, ksPassword, commonName, validityDays, getLogger());
@@ -143,19 +143,23 @@ public class MatrixStats extends JavaPlugin {
             throw new GeneralExceptionWrapper("Failed to prepare TLS keystore: " + ex.getMessage(), ex);
         }
 
-        String bindAddress = cfg.getString("auth-shim.bind-address", "127.0.0.1");
-        int port = cfg.getInt("auth-shim.port", 8081);
-        long timeoutMs = cfg.getLong("auth-shim.authme-call-timeout-ms", 5000L);
+        String bindAddress = cfg.getString("api.bind-address", "127.0.0.1");
+        int port = cfg.getInt("api.port", 8081);
+        long timeoutMs = cfg.getLong("api.main-thread-timeout-ms", 5000L);
 
         try {
-            authShimServer = new AuthShimServer(this, bindAddress, port, keystoreFile, ksPassword, secret, timeoutMs);
-            authShimServer.start();
+            apiServer = new ApiServer(this, bindAddress, port, keystoreFile, ksPassword, secret, timeoutMs);
+            apiServer.start();
         } catch (Exception ex) {
             throw new GeneralExceptionWrapper("Failed to start HTTPS server: " + ex.getMessage(), ex);
         }
 
-        getLogger().info("Auth shim listening on https://" + bindAddress + ":" + port + "/");
-        getLogger().info("Node backend should set AUTHME_SHIM_CA_PATH to: " + certFile.getAbsolutePath());
+        getLogger().info("MatrixStats API listening on https://" + bindAddress + ":" + port + "/");
+        getLogger().info(
+                "Endpoints: GET /health, POST /verify, POST /change-password, GET /skin/{name}, GET /stats/{name}");
+        getLogger().info(
+                "Clients should send the api shared secret in the X-Matrix-Api-Secret header and trust the cert at: "
+                        + certFile.getAbsolutePath());
     }
 
     public static class GeneralExceptionWrapper extends RuntimeException {

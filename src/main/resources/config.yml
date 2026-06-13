@@ -1,33 +1,35 @@
-# MatrixStats auth shim configuration.
+# MatrixStats API configuration.
 #
-# This plugin exposes an HTTPS API that the MatrixSite Node backend calls to
-# verify and change AuthMe passwords. It is meant to bind to loopback only
-# and is protected by a shared secret header (X-Auth-Shim-Secret).
+# Exposes a small HTTPS API on loopback that:
+#   - delegates AuthMe verify / change-password (POST /verify, POST /change-password)
+#   - returns SkinsRestorer skin info       (GET /skin/{username})
+#   - returns live player stats             (GET /stats/{username})
 #
+# All endpoints require the shared secret in the X-Matrix-Api-Secret header.
 # Anything left blank below will be auto-generated on first start and written
 # back into this file. The generated TLS keystore and exported certificate
 # live in the plugin data folder (plugins/MatrixStats/).
 
-auth-shim:
+api:
   enabled: true
 
   # Address to bind the HTTPS listener to. 127.0.0.1 is strongly recommended;
-  # the Node backend should be running on the same host.
+  # clients should be on the same host.
   bind-address: 127.0.0.1
   port: 8081
 
-  # Shared secret that the Node backend must send in the X-Auth-Shim-Secret
-  # header on every request. Leave blank to auto-generate on first start.
+  # Shared secret that clients must send in the X-Matrix-Api-Secret header
+  # on every request. Leave blank to auto-generate on first start.
   shared-secret: ""
 
   # Self-signed TLS material. The keystore is a PKCS12 file. The exported
-  # certificate (PEM) is what the Node backend should trust (AUTHME_SHIM_CA_PATH).
-  keystore-file: auth-shim-keystore.p12
+  # certificate (PEM) is what clients should trust.
+  keystore-file: api-keystore.p12
   keystore-password: ""
-  cert-export-file: auth-shim-cert.pem
+  cert-export-file: api-cert.pem
   cert-validity-days: 3650
   cert-common-name: localhost
 
-  # How long an AuthMe API call is allowed to take before we 504 the request,
-  # in milliseconds.
-  authme-call-timeout-ms: 5000
+  # How long any Bukkit-main-thread call (AuthMe verify, stats collect, etc.)
+  # is allowed to take before we 504 the request, in milliseconds.
+  main-thread-timeout-ms: 5000

@@ -1,4 +1,4 @@
-package org.matrixnetwork.stats.auth;
+package org.matrixnetwork.stats.api;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +13,11 @@ import java.util.logging.Logger;
  * Generates and exports a self-signed PKCS12 keystore using the JDK's
  * bundled {@code keytool} executable. We shell out instead of pulling in a
  * crypto library because keytool ships with every JDK and gives us a
- * known-good cert format the Node backend can trust via PEM.
+ * known-good cert format the API client can trust via PEM.
  */
 public final class KeystoreHelper {
 
-    private static final String ALIAS = "matrixstats-auth-shim";
+    private static final String ALIAS = "matrixstats-api";
 
     private KeystoreHelper() {
     }
@@ -57,7 +57,7 @@ public final class KeystoreHelper {
             return;
         }
         String keytool = resolveKeytool();
-        File tmp = File.createTempFile("auth-shim-cert", ".pem");
+        File tmp = File.createTempFile("matrixstats-cert", ".pem");
         try {
             List<String> cmd = new ArrayList<>();
             cmd.add(keytool);
